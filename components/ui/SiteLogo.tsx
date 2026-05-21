@@ -37,10 +37,10 @@ export function SiteLogo({ className, variant = "light" }: SiteLogoProps) {
     <Image
       src={SITE_CONFIG.logo}
       alt={`${SITE_CONFIG.name} — logo`}
-      width={192}
-      height={64}
+      width={240}
+      height={80}
       priority
-      className={cn("h-12 w-auto object-contain lg:h-16", className)}
+      className={cn("h-14 w-auto object-contain lg:h-20", className)}
       onError={() => setError(true)}
     />
   );

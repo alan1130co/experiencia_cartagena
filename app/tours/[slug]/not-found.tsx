@@ -6,7 +6,7 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 
 export default function TourNotFound() {
   return (
-    <Section className="min-h-[60vh] flex items-center pt-28 lg:pt-32">
+    <Section className="min-h-[60vh] flex items-center pt-32 lg:pt-36">
       <Container>
         <div className="max-w-xl mx-auto text-center">
           <p className="text-label-caps text-primary uppercase tracking-wider mb-4">

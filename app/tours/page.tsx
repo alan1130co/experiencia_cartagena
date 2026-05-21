@@ -28,7 +28,7 @@ export default function ToursPage() {
   return (
     <>
       {/* HERO */}
-      <Section className="bg-surface pt-32 lg:pt-40 pb-12 lg:pb-16">
+      <Section className="bg-surface pt-36 lg:pt-44 pb-12 lg:pb-16">
         <Container>
           <ScrollReveal>
             <div className="max-w-3xl mx-auto text-center">

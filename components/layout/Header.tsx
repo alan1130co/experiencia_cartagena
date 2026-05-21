@@ -21,7 +21,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-outline-variant bg-white/90 backdrop-blur-sm">
       <Container as="nav" aria-label="Navegación principal">
-        <div className="flex h-20 items-center justify-between gap-4 lg:h-24">
+        <div className="flex h-24 items-center justify-between gap-4 lg:h-28">
 
           {/* ── Logo ──────────────────────────────────────────────────────── */}
           <Link

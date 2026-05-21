@@ -56,7 +56,7 @@ export default async function PaqueteDetallePage({
   return (
     <>
       {/* Breadcrumb */}
-      <Section className="pt-28 lg:pt-32 pb-4">
+      <Section className="pt-32 lg:pt-36 pb-4">
         <Container>
           <Link
             href="/paquetes"
