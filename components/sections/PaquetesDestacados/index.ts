@@ -1,0 +1,1 @@
+export { PaquetesDestacados } from "./PaquetesDestacados";

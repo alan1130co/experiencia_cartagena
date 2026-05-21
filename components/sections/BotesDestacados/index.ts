@@ -1,0 +1,1 @@
+export { BotesDestacados } from "./BotesDestacados";

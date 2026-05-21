@@ -1,0 +1,1 @@
+export { DestinosTrending } from "./DestinosTrending";

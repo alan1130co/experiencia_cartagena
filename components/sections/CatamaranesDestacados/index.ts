@@ -1,0 +1,1 @@
+export { CatamaranesDestacados } from "./CatamaranesDestacados";

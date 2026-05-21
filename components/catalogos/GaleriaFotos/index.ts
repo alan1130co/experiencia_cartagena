@@ -1,0 +1,1 @@
+export { GaleriaFotos } from "./GaleriaFotos";
