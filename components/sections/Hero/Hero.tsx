@@ -1,13 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
-// TODO: Reemplazar por video de Cartagena cuando esté disponible
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1583531352515-8884af319dc1?w=1200&q=80";
+const HERO_VIDEO = "/videos/hero/hero-principal.mp4";
 
 export function Hero() {
   return (
@@ -50,13 +47,14 @@ export function Hero() {
             className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6"
           >
             <div className="relative aspect-[4/5] overflow-hidden rounded-b-[16px] rounded-t-[200px]">
-              <Image
-                src={HERO_IMAGE}
-                alt="Calles coloniales de la Ciudad Amurallada de Cartagena de Indias"
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                className="object-cover object-center"
+              <video
+                src={HERO_VIDEO}
+                autoPlay
+                loop
+                muted
+                playsInline
+                aria-label="Calles coloniales de la Ciudad Amurallada de Cartagena de Indias"
+                className="absolute inset-0 size-full object-cover object-center"
               />
             </div>
           </ScrollReveal>

@@ -25,9 +25,8 @@ function IconTikTok({ className }: { className?: string }) {
 // ── Columnas de navegación ─────────────────────────────────────────────────────
 
 const EXPLORA = [
-  { label: "Experiencias", href: "/tours" },
-  { label: "Flota", href: "/flota" },
   { label: "Tours", href: "/tours" },
+  { label: "Flota", href: "/flota" },
   { label: "Paquetes", href: "/paquetes" },
   { label: "Galería", href: "/galeria" },
 ];
