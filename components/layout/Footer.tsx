@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { MapPin, Mail } from "lucide-react";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { Container } from "@/components/ui/Container";
@@ -23,52 +24,46 @@ function IconTikTok({ className }: { className?: string }) {
 }
 
 // ── Columnas de navegación ─────────────────────────────────────────────────────
+// Los textos visibles vienen del namespace "Footer" en messages/{locale}.json —
+// aquí solo se define la forma (rutas), idéntica en todo idioma.
 
 const EXPLORA = [
-  { label: "Tours", href: "/tours" },
-  { label: "Flota", href: "/flota" },
-  { label: "Paquetes", href: "/paquetes" },
-  { label: "Galería", href: "/galeria" },
+  { key: "tours", href: "/tours" },
+  { key: "flota", href: "/flota" },
+  { key: "paquetes", href: "/paquetes" },
+  { key: "galeria", href: "/galeria" },
 ];
 
 const COMPANIA = [
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Contacto", href: "/contacto" },
-  { label: "Blog", href: "/blog" },
-  { label: "Términos", href: "#" },
+  { key: "nosotros", href: "/nosotros" },
+  { key: "contacto", href: "/contacto" },
+  { key: "blog", href: "/blog" },
+  { key: "terminos", href: "/terminos" },
 ];
 
 // ── Componente ─────────────────────────────────────────────────────────────────
 
 export function Footer() {
+  const t = useTranslations("Footer");
   const year = new Date().getFullYear();
 
   const socialButtons = [
     {
       key: "instagram",
-      label: "Instagram",
-      href:
-        (REDES_SOCIALES.instagram as string) !== "PENDIENTE"
-          ? REDES_SOCIALES.instagram
-          : "#",
+      label: t("social.instagram"),
+      href: REDES_SOCIALES.instagram ?? "#",
       Icon: IconInstagram,
     },
     {
       key: "tiktok",
-      label: "TikTok",
-      href:
-        (REDES_SOCIALES.tiktok as string) !== "PENDIENTE"
-          ? REDES_SOCIALES.tiktok
-          : "#",
+      label: t("social.tiktok"),
+      href: REDES_SOCIALES.tiktok ?? "#",
       Icon: IconTikTok,
     },
     {
       key: "email",
-      label: "Correo electrónico",
-      href:
-        (CONTACTO.email as string) !== "PENDIENTE"
-          ? `mailto:${CONTACTO.email}`
-          : "#",
+      label: t("social.email"),
+      href: CONTACTO.email ? `mailto:${CONTACTO.email}` : "#",
       Icon: Mail,
     },
   ];
@@ -84,11 +79,10 @@ export function Footer() {
           {/* Mobile: full | md: row 1 full | lg: col-span-5 */}
           <div className="md:col-span-12 lg:col-span-5">
             <h2 className="font-display text-4xl font-light leading-tight text-on-surface lg:text-5xl">
-              ¿Listo para tu<br />aventura?
+              {t("headlineLine1")}<br />{t("headlineLine2")}
             </h2>
             <p className="mt-5 max-w-sm text-body-md text-on-surface-variant">
-              Hagamos realidad el viaje de tus sueños. Nuestro equipo está listo
-              para diseñar una experiencia única en Cartagena de Indias.
+              {t("subheadline")}
             </p>
 
             {/* Botones circulares — redes sociales + email */}
@@ -127,15 +121,15 @@ export function Footer() {
 
               {/* EXPLORA */}
               <div>
-                <p className="text-label-caps text-primary">Explora</p>
+                <p className="text-label-caps text-primary">{t("exploreTitle")}</p>
                 <ul className="mt-4 space-y-3" role="list">
-                  {EXPLORA.map(({ label, href }) => (
+                  {EXPLORA.map(({ key, href }) => (
                     <li key={href}>
                       <Link
                         href={href}
                         className="text-body-md text-on-surface-variant underline underline-offset-4 decoration-1 decoration-on-surface-variant transition-colors duration-150 hover:text-primary hover:decoration-primary"
                       >
-                        {label}
+                        {t(`links.${key}`)}
                       </Link>
                     </li>
                   ))}
@@ -144,15 +138,15 @@ export function Footer() {
 
               {/* COMPAÑÍA */}
               <div>
-                <p className="text-label-caps text-primary">Compañía</p>
+                <p className="text-label-caps text-primary">{t("companyTitle")}</p>
                 <ul className="mt-4 space-y-3" role="list">
-                  {COMPANIA.map(({ label, href }) => (
-                    <li key={label}>
+                  {COMPANIA.map(({ key, href }) => (
+                    <li key={key}>
                       <Link
                         href={href}
                         className="text-body-md text-on-surface-variant underline underline-offset-4 decoration-1 decoration-on-surface-variant transition-colors duration-150 hover:text-primary hover:decoration-primary"
                       >
-                        {label}
+                        {t(`links.${key}`)}
                       </Link>
                     </li>
                   ))}
@@ -164,17 +158,17 @@ export function Footer() {
           {/* ── SECCIÓN 3 — CTA Reserva ───────────────────────────────────── */}
           {/* Mobile: full | md: 4 cols | lg: col-span-3 */}
           <div className="flex flex-col items-start md:col-span-4 lg:col-span-3 lg:items-end">
-            <p className="text-label-caps text-primary">Reserva</p>
+            <p className="text-label-caps text-primary">{t("reserveTitle")}</p>
             <p className="mt-3 text-body-md text-on-surface-variant lg:text-right">
-              Escríbenos y creamos juntos tu experiencia perfecta en el Caribe.
+              {t("reserveText")}
             </p>
             <WhatsAppButton
               variant="default"
               size="lg"
-              mensaje="Hola, quiero planear mi próxima aventura en Cartagena"
+              mensaje={t("reserveWhatsappMessage")}
               className="mt-6 text-label-caps"
             >
-              PLANEAR AHORA
+              {t("planNow").toUpperCase()}
             </WhatsAppButton>
           </div>
         </div>
@@ -188,7 +182,7 @@ export function Footer() {
             {SITE_CONFIG.name}
           </p>
           <p className="text-sm text-on-surface-variant">
-            © {year} {SITE_CONFIG.name}. Todos los derechos reservados.
+            {t("copyright", { year, name: SITE_CONFIG.name })}
           </p>
         </div>
       </Container>

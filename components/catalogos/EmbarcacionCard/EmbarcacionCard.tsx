@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Users, Ruler, BedDouble, Bath, UserCheck } from "lucide-react";
 import type { Bote } from "@/types/bote";
 import type { Yate } from "@/types/yate";

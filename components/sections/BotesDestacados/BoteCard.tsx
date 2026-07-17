@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   Users, Ruler, Zap, Volume2, Bath, Sun,
   Waves, ChefHat, Shield, type LucideIcon,
@@ -73,7 +73,7 @@ export function BoteCard({ bote }: BoteCardProps) {
             </p>
           </div>
           <Link
-            href={`/botes/${bote.slug}`}
+            href={`/flota/${bote.slug}`}
             className="text-label-caps text-primary underline-offset-4 decoration-1 hover:underline"
           >
             VER DETALLES

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Check, X, MapPin, Clock, Users, Calendar } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
@@ -9,11 +9,15 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { TourCard } from "@/components/catalogos/TourCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
+import { MENSAJES_VENTA } from "@/lib/constants";
 import { tours, getTourBySlug } from "@/lib/data/tours";
 import { getCategoriaInfo } from "@/lib/data/categorias-tours";
+import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return tours.map((t) => ({ slug: t.slug }));
+  return routing.locales.flatMap((locale) =>
+    tours.map((t) => ({ locale, slug: t.slug })),
+  );
 }
 
 export async function generateMetadata({
@@ -163,10 +167,11 @@ export default async function TourDetallePage({
                 <WhatsAppButton
                   variant="default"
                   size="lg"
-                  mensaje={`Hola, me interesa reservar el tour: ${tour.nombre}. ¿Tienen disponibilidad?`}
+                  productName={tour.nombre}
+                  intent="reservar"
                   className="w-full"
                 >
-                  RESERVAR POR WHATSAPP
+                  {MENSAJES_VENTA.botonReservar}
                 </WhatsAppButton>
                 <p className="text-xs text-on-surface-variant text-center">
                   Respuesta inmediata. Sin compromiso.
@@ -324,9 +329,10 @@ export default async function TourDetallePage({
             <WhatsAppButton
               variant="default"
               size="lg"
-              mensaje={`Hola, quiero más información sobre el tour: ${tour.nombre}`}
+              productName={tour.nombre}
+              intent="consultar"
             >
-              HABLAR POR WHATSAPP
+              {MENSAJES_VENTA.botonConsultar}
             </WhatsAppButton>
           </div>
         </Container>

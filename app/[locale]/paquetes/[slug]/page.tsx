@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Check, X, Users, Calendar } from "lucide-react";
 
 import { Container } from "@/components/ui/Container";
@@ -9,10 +9,14 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { PaqueteCard } from "@/components/catalogos/PaqueteCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
+import { MENSAJES_VENTA } from "@/lib/constants";
 import { paquetes, getPaqueteBySlug } from "@/lib/data/paquetes";
+import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
-  return paquetes.map((p) => ({ slug: p.slug }));
+  return routing.locales.flatMap((locale) =>
+    paquetes.map((p) => ({ locale, slug: p.slug })),
+  );
 }
 
 export async function generateMetadata({
@@ -166,10 +170,11 @@ export default async function PaqueteDetallePage({
                 <WhatsAppButton
                   variant="default"
                   size="lg"
-                  mensaje={`Hola, me interesa el paquete ${paquete.nombre}. ¿Tienen disponibilidad?`}
+                  productName={paquete.nombre}
+                  intent="reservar"
                   className="w-full"
                 >
-                  RESERVAR POR WHATSAPP
+                  {MENSAJES_VENTA.botonReservar}
                 </WhatsAppButton>
                 <p className="text-xs text-on-surface-variant text-center">
                   Respuesta inmediata. Sin compromiso.
@@ -317,9 +322,10 @@ export default async function PaqueteDetallePage({
             <WhatsAppButton
               variant="default"
               size="lg"
-              mensaje={`Hola, quiero más información sobre el paquete: ${paquete.nombre}`}
+              productName={paquete.nombre}
+              intent="consultar"
             >
-              HABLAR POR WHATSAPP
+              {MENSAJES_VENTA.botonConsultar}
             </WhatsAppButton>
           </div>
         </Container>

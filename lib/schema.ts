@@ -1,4 +1,10 @@
-import { CONTACTO, COORDENADAS, SITE_CONFIG, AÑO_FUNDACION } from "./constants";
+import {
+  CONTACTO,
+  COORDENADAS,
+  SITE_CONFIG,
+  AÑO_FUNDACION,
+  getSameAsUrls,
+} from "./constants";
 
 // Sanitiza el JSON-LD para prevenir XSS
 function safeStringify(obj: object): string {
@@ -13,9 +19,10 @@ export function getTravelAgencySchema() {
     description:
       "Agencia de viajes premium en Cartagena de Indias. Tours exclusivos, paquetes turísticos y experiencias únicas en el Caribe colombiano.",
     url: SITE_CONFIG.url,
-    telephone: CONTACTO.telefono, // TODO: rellenar dato real
-    email: CONTACTO.email, // TODO: rellenar dato real
-    foundingDate: AÑO_FUNDACION, // TODO: rellenar dato real
+    ...(CONTACTO.telefono && { telephone: CONTACTO.telefono }),
+    ...(CONTACTO.email && { email: CONTACTO.email }),
+    ...(AÑO_FUNDACION && { foundingDate: AÑO_FUNDACION }),
+    ...(getSameAsUrls().length > 0 && { sameAs: getSameAsUrls() }),
     address: {
       "@type": "PostalAddress",
       streetAddress: CONTACTO.direccion, // TODO: rellenar dato real

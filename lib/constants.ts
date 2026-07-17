@@ -1,11 +1,14 @@
 // ─── Información del negocio ─────────────────────────────────────────────────
-// Busca "TODO: rellenar dato real" para encontrar todos los placeholders
+// Los datos de negocio aún no confirmados están tipados como `null`.
+// Antes de producción: busca `null as string | null` en este archivo y completa cada valor.
+// No uses la cadena "PENDIENTE" — un `null` no puede filtrarse por accidente al DOM
+// ni al JSON-LD de schema.ts, un string sí.
 
 export const SITE_CONFIG = {
-  name: "Experiencias Tour Cartagena",
-  shortName: "Experiencias Tour",
+  name: "Cartagena Indigo",
+  shortName: "Cartagena Indigo",
   tagline: "Agencia de Viajes Premium en Cartagena de Indias",
-  url: "https://experienciascartagena.com", // TODO: rellenar dato real
+  url: "https://cartagenaindigo.com",
   logo: "/images/ui/logo.png", // TODO: colocar logo final en public/images/ui/logo.png
   ogImage: "/images/ui/og-default.jpg", // TODO: crear imagen OG 1200×630
   locale: "es_CO",
@@ -13,10 +16,10 @@ export const SITE_CONFIG = {
 } as const;
 
 export const CONTACTO = {
-  whatsapp: "PENDIENTE", // TODO: rellenar número WhatsApp Business (ej: "573001234567")
-  whatsappMensaje: "Hola, me interesa conocer más sobre sus tours y experiencias en Cartagena.",
-  telefono: "PENDIENTE", // TODO: rellenar dato real
-  email: "PENDIENTE", // TODO: rellenar dato real
+  whatsapp: "573244921697",
+  whatsappMensaje: "Hola, me interesa información sobre una reserva en Cartagena Indigo.",
+  telefono: null as string | null,
+  email: null as string | null,
   direccion: "Torices Calle 42 #13-59",
   ciudad: "Cartagena de Indias",
   departamento: "Bolívar",
@@ -30,13 +33,30 @@ export const COORDENADAS = {
 } as const;
 
 export const REDES_SOCIALES = {
-  instagram: "PENDIENTE", // TODO: rellenar dato real (ej: "@experienciascartagena")
-  facebook: "PENDIENTE", // TODO: rellenar dato real
-  tiktok: "PENDIENTE", // TODO: rellenar dato real
-  youtube: "PENDIENTE", // TODO: rellenar dato real
+  instagram: null as string | null, // URL completa: "https://instagram.com/..."
+  facebook: null as string | null,
+  tiktok: null as string | null,
+  youtube: null as string | null,
 } as const;
 
-export const AÑO_FUNDACION = "PENDIENTE"; // TODO: rellenar dato real
+export const AÑO_FUNDACION: string | null = null; // formato ISO: "2019-01-01"
+
+// ─── Copys de conversión (WhatsApp-first) ───────────────────────────────────
+// Texto de botones CTA reutilizable en tarjetas y páginas de detalle
+// (tours, paquetes, flota). El mensaje base de WhatsApp vive en
+// CONTACTO.whatsappMensaje — única fuente de verdad, no lo dupliques aquí.
+
+export const MENSAJES_VENTA = {
+  botonConsultar: "Consultar disponibilidad",
+  botonReservar: "Reservar ahora",
+} as const;
+
+// ─── Internacionalización (next-intl) ───────────────────────────────────────
+
+export const I18N_CONFIG = {
+  locales: ["es", "en"],
+  defaultLocale: "es",
+} as const;
 
 export const KEYWORDS_PRIMARIAS = [
   "viajes a Cartagena",
@@ -56,54 +76,82 @@ export const KEYWORDS_LONGTAIL = [
 ] as const;
 
 // Navegación principal
+// Los textos visibles NO viven aquí — `labelKey`/`descriptionKey` son claves
+// del namespace "Header" en messages/{locale}.json. Esta estructura solo
+// define la forma de la navegación (rutas e iconos), idéntica en todo idioma.
 type NavDropdownItem = {
-  label: string;
+  labelKey: string;
   href: string;
   icon: string;
-  description: string;
+  descriptionKey: string;
 };
 
 export type NavLink = {
-  label: string;
+  labelKey: string;
   href: string;
   dropdown?: NavDropdownItem[];
 };
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "Inicio", href: "/" },
+  { labelKey: "nav.inicio", href: "/" },
   {
-    label: "Flota",
+    labelKey: "nav.flota",
     href: "/flota",
     dropdown: [
       {
-        label: "Botes y Lanchas",
+        labelKey: "nav.botes",
         href: "/botes",
         icon: "Anchor",
-        description: "Speedboats y lanchas rápidas para el día",
+        descriptionKey: "nav.botesDesc",
       },
       {
-        label: "Yates",
+        labelKey: "nav.yates",
         href: "/yates",
         icon: "Ship",
-        description: "Yates de lujo con cabinas para dormir",
+        descriptionKey: "nav.yatesDesc",
       },
       {
-        label: "Catamaranes",
+        labelKey: "nav.catamaranes",
         href: "/catamaranes",
         icon: "Sailboat",
-        description: "Powercats Leopard y Lagoon",
+        descriptionKey: "nav.catamaranesDesc",
       },
     ],
   },
-  { label: "Tours", href: "/tours" },
-  { label: "Paquetes", href: "/paquetes" },
-  { label: "Nosotros", href: "/nosotros" },
-  { label: "Contacto", href: "/contacto" },
+  { labelKey: "nav.tours", href: "/tours" },
+  { labelKey: "nav.paquetes", href: "/paquetes" },
+  { labelKey: "nav.nosotros", href: "/nosotros" },
+  { labelKey: "nav.contacto", href: "/contacto" },
 ];
 
-// WhatsApp helper
-export function getWhatsAppUrl(mensaje?: string): string {
-  const numero = CONTACTO.whatsapp;
+// ─── Helpers de datos de negocio ────────────────────────────────────────────
+
+/** URLs de redes sociales activas, listas para `sameAs` en JSON-LD (SEO). */
+export function getSameAsUrls(): string[] {
+  return Object.values(REDES_SOCIALES).filter(
+    (url): url is string => Boolean(url),
+  );
+}
+
+/** Construye el link de WhatsApp, o `null` si el número no está configurado. */
+export function getWhatsAppUrl(mensaje?: string): string | null {
+  if (!CONTACTO.whatsapp) return null;
+  const numero = CONTACTO.whatsapp.replace(/[\s+()-]/g, "");
   const texto = encodeURIComponent(mensaje ?? CONTACTO.whatsappMensaje);
   return `https://wa.me/${numero}?text=${texto}`;
+}
+
+/** Intención de contacto: distingue un cierre directo de una consulta previa. */
+export type WhatsAppIntent = "reservar" | "consultar";
+
+/** Mensaje de WhatsApp personalizado con el nombre de un tour/paquete/embarcación. */
+export function getProductWhatsAppMessage(
+  productName: string,
+  intent: WhatsAppIntent = "consultar",
+): string {
+  const accion =
+    intent === "reservar"
+      ? `quiero realizar una reserva para ${productName}`
+      : `me gustaría obtener más información sobre ${productName}`;
+  return `Hola, ${accion} en ${SITE_CONFIG.name}.`;
 }

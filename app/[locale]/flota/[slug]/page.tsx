@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import {
   ArrowLeft,
   Check,
@@ -27,15 +27,19 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
+import { MENSAJES_VENTA } from "@/lib/constants";
 import {
   getEmbarcacionBySlug,
   getRelacionadas,
   flotaCompleta,
 } from "@/lib/data/flota";
+import { routing } from "@/i18n/routing";
 
-// SSG: pre-generar las 18 páginas en build time
+// SSG: pre-generar las páginas (18 embarcaciones × 2 locales) en build time
 export function generateStaticParams() {
-  return flotaCompleta.map((emb) => ({ slug: emb.slug }));
+  return routing.locales.flatMap((locale) =>
+    flotaCompleta.map((emb) => ({ locale, slug: emb.slug })),
+  );
 }
 
 export async function generateMetadata({
@@ -207,10 +211,11 @@ export default async function EmbarcacionDetallePage({
                 <WhatsAppButton
                   variant="default"
                   size="lg"
-                  mensaje={`Hola, me interesa reservar ${emb.nombre}. ¿Está disponible?`}
+                  productName={emb.nombre}
+                  intent="reservar"
                   className="w-full"
                 >
-                  RESERVAR POR WHATSAPP
+                  {MENSAJES_VENTA.botonReservar}
                 </WhatsAppButton>
                 <p className="text-xs text-on-surface-variant text-center">
                   Respuesta inmediata. Sin compromiso.
@@ -330,9 +335,10 @@ export default async function EmbarcacionDetallePage({
             <WhatsAppButton
               variant="default"
               size="lg"
-              mensaje={`Hola, quiero más información sobre ${emb.nombre}`}
+              productName={emb.nombre}
+              intent="consultar"
             >
-              HABLAR POR WHATSAPP
+              {MENSAJES_VENTA.botonConsultar}
             </WhatsAppButton>
           </div>
         </Container>

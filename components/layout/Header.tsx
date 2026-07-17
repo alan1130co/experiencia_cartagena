@@ -1,18 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Menu, X, User, ChevronDown, Anchor, Ship, Sailboat } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
 import { SiteLogo } from "@/components/ui/SiteLogo";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 const ICON_MAP = { Anchor, Ship, Sailboat };
 
 export function Header() {
+  const t = useTranslations("Header");
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,13 +22,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-outline-variant bg-white/90 backdrop-blur-sm">
-      <Container as="nav" aria-label="Navegación principal">
+      <Container as="nav" aria-label={t("navAriaLabel")}>
         <div className="flex h-24 items-center justify-between gap-4 lg:h-28">
 
           {/* ── Logo ──────────────────────────────────────────────────────── */}
           <Link
             href="/"
-            aria-label={`${SITE_CONFIG.name} — inicio`}
+            aria-label={t("logoAriaLabel", { name: SITE_CONFIG.name })}
             className="shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             <SiteLogo />
@@ -53,7 +55,7 @@ export function Header() {
                           : "text-on-surface-variant after:scale-x-0 hover:after:scale-x-100",
                       )}
                     >
-                      {link.label.toUpperCase()}
+                      {t(link.labelKey).toUpperCase()}
                     </Link>
                   </li>
                 );
@@ -72,7 +74,7 @@ export function Header() {
                         : "text-on-surface-variant after:scale-x-0 hover:after:scale-x-100",
                     )}
                   >
-                    {link.label.toUpperCase()}
+                    {t(link.labelKey).toUpperCase()}
                     <ChevronDown
                       className="w-4 h-4 transition-transform duration-200 group-hover:rotate-180"
                       aria-hidden
@@ -106,10 +108,10 @@ export function Header() {
                             )}
                             <div>
                               <p className="font-semibold text-primary text-sm">
-                                {item.label}
+                                {t(item.labelKey)}
                               </p>
                               <p className="text-xs text-on-surface-variant mt-0.5">
-                                {item.description}
+                                {t(item.descriptionKey)}
                               </p>
                             </div>
                           </Link>
@@ -122,7 +124,7 @@ export function Header() {
                           href="/flota"
                           className="flex items-center justify-between p-3 rounded-xl hover:bg-primary hover:text-white transition-colors text-primary"
                         >
-                          <span className="text-sm font-semibold">Ver toda la flota</span>
+                          <span className="text-sm font-semibold">{t("viewFullFleet")}</span>
                           <span aria-hidden>→</span>
                         </Link>
                       </div>
@@ -133,12 +135,17 @@ export function Header() {
             })}
           </ul>
 
-          {/* ── Derecha: Usuario + WhatsApp CTA + Hamburger ───────────────── */}
+          {/* ── Derecha: Idioma + Usuario + WhatsApp CTA + Hamburger ───────── */}
           <div className="flex shrink-0 items-center gap-3">
+            {/* Selector de idioma — solo desktop */}
+            <span className="hidden lg:inline-flex">
+              <LanguageSwitcher />
+            </span>
+
             {/* Icono usuario — solo desktop */}
             <Link
               href="/login"
-              aria-label="Mi cuenta"
+              aria-label={t("myAccount")}
               className="hidden rounded-md p-1.5 text-outline transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:flex"
             >
               <User className="size-5" aria-hidden />
@@ -149,10 +156,10 @@ export function Header() {
               <WhatsAppButton
                 variant="default"
                 size="md"
-                mensaje="Hola, me interesa reservar una experiencia en Cartagena. ¿Me pueden dar más información?"
+                mensaje={t("whatsappMessage")}
                 className="text-label-caps"
               >
-                Reservar por WhatsApp
+                {t("reserveWhatsapp")}
               </WhatsAppButton>
             </span>
 
@@ -161,7 +168,7 @@ export function Header() {
               type="button"
               onClick={() => setIsOpen(!isOpen)}
               aria-expanded={isOpen}
-              aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-label={isOpen ? t("closeMenu") : t("openMenu")}
               className="rounded-md p-2 text-on-surface-variant transition-colors hover:bg-surface-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:hidden"
             >
               {isOpen ? (
@@ -196,7 +203,7 @@ export function Header() {
                             : "text-on-surface-variant hover:bg-surface-container hover:text-primary",
                         )}
                       >
-                        {link.label}
+                        {t(link.labelKey)}
                       </Link>
                       <div className="ml-4 mt-1 mb-1 space-y-0.5">
                         {link.dropdown.map((item) => (
@@ -206,7 +213,7 @@ export function Header() {
                             onClick={close}
                             className="block rounded-md px-4 py-2 text-sm text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
                           >
-                            {item.label}
+                            {t(item.labelKey)}
                           </Link>
                         ))}
                       </div>
@@ -226,7 +233,7 @@ export function Header() {
                           : "text-on-surface-variant hover:bg-surface-container hover:text-primary",
                       )}
                     >
-                      {link.label}
+                      {t(link.labelKey)}
                     </Link>
                   </li>
                 );
@@ -240,8 +247,13 @@ export function Header() {
                   className="flex items-center gap-2 rounded-md px-4 py-2.5 text-label-caps text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
                 >
                   <User className="size-4 shrink-0" aria-hidden />
-                  Mi cuenta
+                  {t("myAccount")}
                 </Link>
+              </li>
+
+              {/* Selector de idioma */}
+              <li className="px-4 py-2.5">
+                <LanguageSwitcher />
               </li>
             </ul>
 
@@ -253,10 +265,10 @@ export function Header() {
               <WhatsAppButton
                 variant="default"
                 size="md"
-                mensaje="Hola, me interesa reservar una experiencia en Cartagena. ¿Me pueden dar más información?"
+                mensaje={t("whatsappMessage")}
                 className="w-full justify-center text-label-caps"
               >
-                Reservar por WhatsApp
+                {t("reserveWhatsapp")}
               </WhatsAppButton>
             </div>
           </div>

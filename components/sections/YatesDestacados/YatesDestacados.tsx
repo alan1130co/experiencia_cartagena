@@ -4,7 +4,7 @@ import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { yatesDestacados } from "@/lib/data/yates";
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 export function YatesDestacados() {
   return (

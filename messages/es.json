@@ -1,0 +1,99 @@
+{
+  "LanguageSwitcher": {
+    "label": "Cambiar idioma",
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "Header": {
+    "navAriaLabel": "Navegación principal",
+    "logoAriaLabel": "{name} — inicio",
+    "myAccount": "Mi cuenta",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "reserveWhatsapp": "Reservar por WhatsApp",
+    "whatsappMessage": "Hola, me interesa reservar una experiencia en Cartagena. ¿Me pueden dar más información?",
+    "viewFullFleet": "Ver toda la flota",
+    "nav": {
+      "inicio": "Inicio",
+      "flota": "Flota",
+      "tours": "Tours",
+      "paquetes": "Paquetes",
+      "nosotros": "Nosotros",
+      "contacto": "Contacto",
+      "botes": "Botes y Lanchas",
+      "botesDesc": "Speedboats y lanchas rápidas para el día",
+      "yates": "Yates",
+      "yatesDesc": "Yates de lujo con cabinas para dormir",
+      "catamaranes": "Catamaranes",
+      "catamaranesDesc": "Powercats Leopard y Lagoon"
+    }
+  },
+  "Footer": {
+    "headlineLine1": "¿Listo para tu",
+    "headlineLine2": "aventura?",
+    "subheadline": "Hagamos realidad el viaje de tus sueños. Nuestro equipo está listo para diseñar una experiencia única en Cartagena de Indias.",
+    "social": {
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "email": "Correo electrónico"
+    },
+    "exploreTitle": "Explora",
+    "companyTitle": "Compañía",
+    "links": {
+      "tours": "Tours",
+      "flota": "Flota",
+      "paquetes": "Paquetes",
+      "galeria": "Galería",
+      "nosotros": "Nosotros",
+      "contacto": "Contacto",
+      "blog": "Blog",
+      "terminos": "Términos"
+    },
+    "reserveTitle": "Reserva",
+    "reserveText": "Escríbenos y creamos juntos tu experiencia perfecta en el Caribe.",
+    "reserveWhatsappMessage": "Hola, quiero planear mi próxima aventura en Cartagena",
+    "planNow": "Planear ahora",
+    "copyright": "© {year} {name}. Todos los derechos reservados."
+  },
+  "NotFound": {
+    "eyebrow": "Error 404",
+    "title": "Esta página no existe",
+    "description": "La página que buscas no está disponible o fue movida. Explora nuestro sitio o contáctanos si necesitas ayuda.",
+    "backHome": "Volver al inicio",
+    "contactUs": "Preguntar por WhatsApp",
+    "whatsappMessage": "Hola, llegué a una página que no encontré en el sitio y quería preguntar sobre sus experiencias en Cartagena."
+  },
+  "Placeholder": {
+    "backHome": "Volver al inicio",
+    "login": {
+      "eyebrow": "Mi cuenta",
+      "title": "Próximamente",
+      "description": "Estamos construyendo tu área de cliente para gestionar reservas y favoritos. Mientras tanto, escríbenos por WhatsApp y te ayudamos directamente."
+    },
+    "galeria": {
+      "eyebrow": "Galería",
+      "title": "Próximamente",
+      "description": "Estamos preparando una galería completa de fotos y videos de nuestras experiencias. Mientras tanto, puedes ver imágenes destacadas en nuestra página de inicio."
+    },
+    "destinos": {
+      "eyebrow": "Destinos",
+      "title": "Descubre Cartagena",
+      "description": "Estamos preparando guías completas de cada destino. Por ahora, explora los lugares más visitados:"
+    },
+    "destinoDetalle": {
+      "eyebrow": "Destino",
+      "title": "{nombre}",
+      "description": "Estamos preparando una guía completa de {nombre}, con fotos, mapa y experiencias recomendadas. Mientras tanto, contáctanos para más información."
+    },
+    "blog": {
+      "eyebrow": "Blog",
+      "title": "Próximamente",
+      "description": "Estamos preparando artículos con consejos de viaje, guías gastronómicas e historia de Cartagena de Indias."
+    },
+    "terminos": {
+      "eyebrow": "Legal",
+      "title": "Términos y condiciones",
+      "description": "Estamos finalizando el documento legal de términos y condiciones. Si tienes preguntas sobre reservas o políticas, contáctanos directamente."
+    }
+  }
+}

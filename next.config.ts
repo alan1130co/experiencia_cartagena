@@ -1,17 +1,17 @@
 import path from "path";
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
-  async redirects() {
-    return [
-      { source: "/botes",      destination: "/flota?categoria=botes",      permanent: false },
-      { source: "/yates",      destination: "/flota?categoria=yates",      permanent: false },
-      { source: "/catamaranes",destination: "/flota?categoria=catamaranes",permanent: false },
-    ];
-  },
+  // Los redirects de /botes, /yates, /catamaranes viven ahora como páginas reales
+  // en app/[locale]/{botes,yates,catamaranes}/page.tsx — un redirect a nivel de
+  // next.config.ts no puede ver el prefijo de locale (/es/botes, /en/botes) y
+  // dejaba de coincidir tras la migración a next-intl.
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
@@ -21,4 +21,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

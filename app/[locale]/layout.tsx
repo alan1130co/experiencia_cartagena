@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { SITE_CONFIG } from "@/lib/constants";
-import "./globals.css";
+import { routing } from "@/i18n/routing";
+import "../globals.css";
 
 const fraunces = Fraunces({
   variable: "--font-fraunces",
@@ -32,12 +36,28 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale);
+
   return (
     <html
-      lang="es"
+      lang={locale}
       data-scroll-behavior="smooth"
       className={`${fraunces.variable} ${plusJakartaSans.variable}`}
     >
@@ -45,21 +65,23 @@ export default function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" />
       </head>
       <body className="flex min-h-dvh flex-col bg-white font-sans text-on-surface antialiased">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary focus:text-label-caps focus:outline-none"
-        >
-          Ir al contenido principal
-        </a>
-        <Header />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton
-          variant="floating"
-          mensaje="Hola, me interesa conocer las experiencias de turismo en Cartagena"
-        />
+        <NextIntlClientProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary focus:text-label-caps focus:outline-none"
+          >
+            Ir al contenido principal
+          </a>
+          <Header />
+          <main id="main-content" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton
+            variant="floating"
+            mensaje="Hola, me interesa conocer las experiencias de turismo en Cartagena"
+          />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

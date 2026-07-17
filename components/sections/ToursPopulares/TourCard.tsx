@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Clock, Users } from "lucide-react";
 import type { Tour } from "@/types";
 import { formatPrice, tourCategoria } from "@/lib/utils";

@@ -1,12 +1,22 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CONTACTO, SITE_CONFIG } from "@/lib/constants";
+import {
+  SITE_CONFIG,
+  getWhatsAppUrl,
+  getProductWhatsAppMessage,
+  type WhatsAppIntent,
+} from "@/lib/constants";
 
 // ── Props ─────────────────────────────────────────────────────────────────────
 
 interface WhatsAppButtonProps {
+  /** Mensaje explícito. Tiene prioridad sobre `productName` y el default global. */
   mensaje?: string;
+  /** Nombre del tour/paquete/embarcación — genera un mensaje personalizado si `mensaje` no se especifica. */
+  productName?: string;
+  /** Matiza el mensaje generado desde `productName`: cierre directo vs. consulta previa. Default: "consultar". */
+  intent?: WhatsAppIntent;
   variant?: "default" | "floating" | "inline" | "icon";
   children?: React.ReactNode;
   className?: string;
@@ -30,10 +40,16 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 // ── Lógica de click centralizada ──────────────────────────────────────────────
 
-function handleWhatsAppClick(mensaje?: string) {
-  const raw = CONTACTO.whatsapp as string;
+function handleWhatsAppClick(
+  mensaje?: string,
+  productName?: string,
+  intent?: WhatsAppIntent,
+) {
+  const texto =
+    mensaje ?? (productName ? getProductWhatsAppMessage(productName, intent) : undefined);
+  const url = getWhatsAppUrl(texto);
 
-  if (!raw || raw === "PENDIENTE") {
+  if (!url) {
     console.warn(
       "[WhatsApp] Número no configurado. Actualiza CONTACTO.whatsapp en lib/constants.ts",
     );
@@ -43,17 +59,15 @@ function handleWhatsAppClick(mensaje?: string) {
     return;
   }
 
-  const numero = raw.replace(/[\s+()-]/g, "");
-  const texto = encodeURIComponent(
-    mensaje ?? "Hola, me interesa conocer las experiencias de turismo en Cartagena",
-  );
-  window.open(`https://wa.me/${numero}?text=${texto}`, "_blank", "noopener,noreferrer");
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
 // ── Componente ────────────────────────────────────────────────────────────────
 
 export function WhatsAppButton({
   mensaje,
+  productName,
+  intent,
   variant = "default",
   children,
   className,
@@ -90,7 +104,7 @@ export function WhatsAppButton({
           <span className="absolute inset-0 animate-ping rounded-full bg-brand-green opacity-25 [animation-duration:3s]" />
           <button
             type="button"
-            onClick={() => handleWhatsAppClick(mensaje)}
+            onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
             aria-label="Contactar por WhatsApp"
             className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all duration-200 hover:scale-110 hover:bg-green-600 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 lg:h-16 lg:w-16"
           >
@@ -106,7 +120,7 @@ export function WhatsAppButton({
     return (
       <button
         type="button"
-        onClick={() => handleWhatsAppClick(mensaje)}
+        onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
         className={cn(
           "inline-flex items-center gap-1.5 text-brand-green underline-offset-2 hover:text-green-700 hover:underline",
           className,
@@ -123,7 +137,7 @@ export function WhatsAppButton({
     return (
       <button
         type="button"
-        onClick={() => handleWhatsAppClick(mensaje)}
+        onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
         aria-label="Contactar por WhatsApp"
         className={cn(
           "flex h-10 w-10 items-center justify-center rounded-full bg-brand-green text-white transition-colors duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
@@ -139,7 +153,7 @@ export function WhatsAppButton({
   return (
     <button
       type="button"
-      onClick={() => handleWhatsAppClick(mensaje)}
+      onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
       className={cn(
         "inline-flex items-center gap-2 rounded-full bg-brand-green font-semibold text-white transition-all duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
         sizeClasses[size],
