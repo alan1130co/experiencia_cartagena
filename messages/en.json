@@ -70,11 +70,6 @@
       "title": "Coming soon",
       "description": "We're building your customer area to manage bookings and favorites. In the meantime, message us on WhatsApp and we'll help you directly."
     },
-    "galeria": {
-      "eyebrow": "Gallery",
-      "title": "Coming soon",
-      "description": "We're preparing a full photo and video gallery of our experiences. In the meantime, check out featured images on our home page."
-    },
     "destinos": {
       "eyebrow": "Destinations",
       "title": "Discover Cartagena",
@@ -94,6 +89,14 @@
       "eyebrow": "Legal",
       "title": "Terms and conditions",
       "description": "We're finalizing the legal terms and conditions document. If you have questions about bookings or policies, contact us directly."
+    }
+  },
+  "Galeria": {
+    "verGaleriaCompleta": "See full gallery",
+    "pagina": {
+      "eyebrow": "Gallery",
+      "title": "Cartagena in pictures",
+      "description": "Explore all 28 photos that capture the essence of Cartagena de Indias: beaches, sea, colonial architecture, and unforgettable experiences."
     }
   }
 }

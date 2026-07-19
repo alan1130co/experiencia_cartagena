@@ -1,11 +1,16 @@
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
+import { ButtonLink } from "@/components/ui/Button";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { galeriaImagenes } from "@/lib/data/galeria";
 import { cn } from "@/lib/utils";
 
 export function Galeria() {
+  const t = useTranslations("Galeria");
+  const destacadas = galeriaImagenes.filter((img) => img.destacada);
+
   return (
     <Section className="bg-surface">
       <Container>
@@ -22,34 +27,43 @@ export function Galeria() {
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={120}>
-          {/* Grid masonry manual: columnas con imágenes de diferentes alturas */}
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
-            {galeriaImagenes.map((img) => (
+        {/* Masonry fluido con CSS columns: cada tarjeta fluye a la columna con
+            más espacio libre, sin celdas de grid ni huecos muertos.
+            break-inside-avoid evita que una imagen se corte entre columnas.
+            Cada tarjeta entra con su propio ScrollReveal (fade + slide-up) y
+            un delay creciente para un efecto de entrada escalonado. */}
+        <div className="columns-1 gap-6 space-y-6 sm:columns-2 lg:columns-3">
+          {destacadas.map((img, index) => (
+            <ScrollReveal
+              key={img.id}
+              delay={index * 80}
+              className="break-inside-avoid"
+            >
               <div
-                key={img.id}
                 className={cn(
                   "group relative overflow-hidden rounded-2xl",
-                  img.tamaño === "grande"
-                    ? "col-span-2 aspect-[4/3]"
-                    : "col-span-1 aspect-square",
+                  img.tamaño === "grande" ? "aspect-[4/3]" : "aspect-[3/4]",
                 )}
               >
                 <Image
                   src={img.src}
                   alt={img.alt}
                   fill
-                  sizes={
-                    img.tamaño === "grande"
-                      ? "(max-width: 768px) 100vw, 50vw"
-                      : "(max-width: 768px) 50vw, 25vw"
-                  }
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Overlay hover */}
                 <div className="absolute inset-0 bg-primary/0 transition-colors duration-300 group-hover:bg-primary/20" />
               </div>
-            ))}
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal delay={200}>
+          <div className="mt-10 text-center lg:mt-12">
+            <ButtonLink href="/galeria" variant="secondary" size="lg">
+              {t("verGaleriaCompleta")}
+            </ButtonLink>
           </div>
         </ScrollReveal>
 

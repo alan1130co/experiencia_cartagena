@@ -70,11 +70,6 @@
       "title": "Próximamente",
       "description": "Estamos construyendo tu área de cliente para gestionar reservas y favoritos. Mientras tanto, escríbenos por WhatsApp y te ayudamos directamente."
     },
-    "galeria": {
-      "eyebrow": "Galería",
-      "title": "Próximamente",
-      "description": "Estamos preparando una galería completa de fotos y videos de nuestras experiencias. Mientras tanto, puedes ver imágenes destacadas en nuestra página de inicio."
-    },
     "destinos": {
       "eyebrow": "Destinos",
       "title": "Descubre Cartagena",
@@ -94,6 +89,14 @@
       "eyebrow": "Legal",
       "title": "Términos y condiciones",
       "description": "Estamos finalizando el documento legal de términos y condiciones. Si tienes preguntas sobre reservas o políticas, contáctanos directamente."
+    }
+  },
+  "Galeria": {
+    "verGaleriaCompleta": "Ver galería completa",
+    "pagina": {
+      "eyebrow": "Galería",
+      "title": "Cartagena en imágenes",
+      "description": "Explora las 28 fotos que capturan la esencia de Cartagena de Indias: playas, mar, arquitectura colonial y experiencias inolvidables."
     }
   }
 }

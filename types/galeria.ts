@@ -3,4 +3,5 @@ export interface GaleriaImagen {
   src: string;
   alt: string;
   tamaño: "grande" | "pequeña";
+  destacada: boolean;
 }
