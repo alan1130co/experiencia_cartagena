@@ -122,7 +122,7 @@ export function WhatsAppButton({
         type="button"
         onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
         className={cn(
-          "inline-flex items-center gap-1.5 text-brand-green underline-offset-2 hover:text-green-700 hover:underline",
+          "inline-flex items-center justify-center gap-1.5 text-brand-green underline-offset-2 hover:text-green-700 hover:underline",
           className,
         )}
       >
@@ -155,7 +155,7 @@ export function WhatsAppButton({
       type="button"
       onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
       className={cn(
-        "inline-flex items-center gap-2 rounded-full bg-brand-green font-semibold text-white transition-all duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
+        "inline-flex items-center justify-center gap-2 rounded-full bg-brand-green font-semibold text-white transition-all duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
         sizeClasses[size],
         className,
       )}

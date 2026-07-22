@@ -3,11 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
-import { toursPopulares } from "@/lib/data/tours";
+import { toursData } from "@/lib/data/tours";
 import { TourCard } from "./TourCard";
 
 export function ToursPopulares() {
-  const tours = toursPopulares.slice(0, 3);
+  const tours = toursData.slice(0, 3);
 
   return (
     <Section className="bg-surface">

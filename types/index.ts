@@ -7,7 +7,6 @@ export type { Yate } from "./yate";
 export type { Catamaran } from "./catamaran";
 
 // Catálogo principal
-export type { Tour, CategoriaTour } from "./tour";
 export type { Paquete } from "./paquete";
 
 // Contenido

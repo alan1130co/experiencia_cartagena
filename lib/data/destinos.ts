@@ -8,8 +8,7 @@ export const destinos: Destino[] = [
       "El corazón histórico de Cartagena, Patrimonio de la Humanidad UNESCO.",
     descripcion:
       "Camina entre murallas coloniales de cuatro siglos de historia, plazas coloridas y calles de piedra. La Ciudad Amurallada es el alma de Cartagena de Indias, declarada Patrimonio de la Humanidad por la UNESCO en 1984.",
-    imagen:
-      "https://images.unsplash.com/photo-1583531352515-8884af319dc1?w=1200&q=80",
+    imagen: "/images/destinos/ciudad-amurallada.jpg",
     imagenAlt:
       "Balcones coloniales de la Ciudad Amurallada de Cartagena",
     destacado: true,
@@ -23,8 +22,7 @@ export const destinos: Destino[] = [
       "Aguas cristalinas y arrecifes de coral a 45 minutos de Cartagena.",
     descripcion:
       "El Parque Nacional Natural Corales del Rosario y de San Bernardo alberga 27 islas rodeadas de aguas turquesa. Buceo, snorkel y descanso absoluto en el Caribe colombiano.",
-    imagen:
-      "https://images.unsplash.com/photo-1622037022824-0c71d511ef3c?w=1200&q=80",
+    imagen: "/images/destinos/islas-del-rosario.jpg",
     imagenAlt:
       "Aguas turquesa de las Islas del Rosario en el Caribe colombiano",
     destacado: true,
@@ -51,8 +49,7 @@ export const destinos: Destino[] = [
       "El barrio más auténtico y colorido, cuna del arte urbano cartagenero.",
     descripcion:
       "Antes considerado peligroso, hoy Getsemaní es el barrio más vibrante de Cartagena. Murales imponentes, plazas llenas de vida y la gastronomía más auténtica de la ciudad.",
-    imagen:
-      "https://images.unsplash.com/photo-1596367407372-96cb88503db6?w=1200&q=80",
+    imagen: "/images/destinos/getsemani.jpg",
     imagenAlt: "Murales coloridos del barrio Getsemaní en Cartagena",
     destacado: true,
     tags: ["Arte", "Cultura", "Gastronomía", "Auténtico"],
@@ -65,10 +62,9 @@ export const destinos: Destino[] = [
       "Una de las playas más hermosas del Caribe colombiano en la Isla Barú.",
     descripcion:
       "Arena blanca, agua cálida de color esmeralda y palmeras. Playa Blanca en la Isla Barú es el destino de playa por excelencia de la región de Cartagena.",
-    imagen:
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
+    imagen: "/images/destinos/playa-blanca.jpg",
     imagenAlt: "Arena blanca y palmeras de Playa Blanca en Barú",
-    destacado: false,
+    destacado: true,
     tags: ["Playa", "Relax", "Naturaleza"],
     coordenadas: { lat: 10.2089, lng: -75.6578 },
   },

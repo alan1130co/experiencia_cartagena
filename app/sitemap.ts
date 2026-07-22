@@ -3,7 +3,7 @@ import { SITE_CONFIG } from "@/lib/constants";
 import { destinos } from "@/lib/data/destinos";
 import { paquetes } from "@/lib/data/paquetes";
 import { botes } from "@/lib/data/botes";
-import { tours } from "@/lib/data/tours";
+import { toursData } from "@/lib/data/tours";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = SITE_CONFIG.url;
@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.85,
   }));
 
-  const tourRoutes: MetadataRoute.Sitemap = tours.map((t) => ({
+  const tourRoutes: MetadataRoute.Sitemap = toursData.map((t) => ({
     url: `${base}/tours/${t.slug}`,
     lastModified: now,
     changeFrequency: "monthly",

@@ -20,14 +20,3 @@ export function tipoYate(tipo: string): string {
 export function porcentajeDescuento(original: number, actual: number): number {
   return Math.round(((original - actual) / original) * 100);
 }
-
-export function tourCategoria(categoria: string): string {
-  const categorias: Record<string, string> = {
-    cultural: "Cultural",
-    playa: "Playa",
-    gastronomico: "Gastronómico",
-    naturaleza: "Naturaleza",
-    aventura: "Aventura",
-  };
-  return categorias[categoria] ?? categoria;
-}
