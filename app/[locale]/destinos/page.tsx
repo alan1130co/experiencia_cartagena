@@ -1,7 +1,22 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
 import { destinos } from "@/lib/data/destinos";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata.destinos" });
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default function DestinosPage() {
   const t = useTranslations("Placeholder");

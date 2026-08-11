@@ -1,8 +1,23 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { galeriaImagenes } from "@/lib/data/galeria";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata.galeria" });
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default function GaleriaPage() {
   const t = useTranslations("Galeria.pagina");

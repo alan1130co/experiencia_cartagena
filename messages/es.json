@@ -98,5 +98,27 @@
       "title": "Cartagena en imágenes",
       "description": "Explora las 28 fotos que capturan la esencia de Cartagena de Indias: playas, mar, arquitectura colonial y experiencias inolvidables."
     }
+  },
+  "Metadata": {
+    "blog": {
+      "title": "Blog de Viajes a Cartagena de Indias",
+      "description": "Guías de viaje, gastronomía e historia de Cartagena de Indias. Muy pronto — escríbenos por WhatsApp mientras tanto."
+    },
+    "login": {
+      "title": "Mi Cuenta",
+      "description": "Área de cliente en construcción para gestionar tus reservas. Escríbenos por WhatsApp mientras tanto."
+    },
+    "terminos": {
+      "title": "Términos y Condiciones",
+      "description": "Términos y condiciones de reserva de Cartagena Indigo. ¿Dudas? Escríbenos por WhatsApp."
+    },
+    "destinos": {
+      "title": "Destinos en Cartagena de Indias",
+      "description": "Ciudad Amurallada, Islas del Rosario, Playa Blanca y más. Descubre los mejores destinos y planea tu viaje a Cartagena."
+    },
+    "galeria": {
+      "title": "Galería de Fotos de Cartagena de Indias",
+      "description": "Playas, mar, arquitectura colonial y experiencias inolvidables. Explora nuestra galería de fotos de Cartagena."
+    }
   }
 }

@@ -98,5 +98,27 @@
       "title": "Cartagena in pictures",
       "description": "Explore all 28 photos that capture the essence of Cartagena de Indias: beaches, sea, colonial architecture, and unforgettable experiences."
     }
+  },
+  "Metadata": {
+    "blog": {
+      "title": "Cartagena de Indias Travel Blog",
+      "description": "Travel guides, food tips, and the history of Cartagena de Indias. Coming soon — message us on WhatsApp in the meantime."
+    },
+    "login": {
+      "title": "My Account",
+      "description": "Customer area under construction to manage your bookings. Message us on WhatsApp in the meantime."
+    },
+    "terminos": {
+      "title": "Terms and Conditions",
+      "description": "Booking terms and conditions for Cartagena Indigo. Questions? Message us on WhatsApp."
+    },
+    "destinos": {
+      "title": "Destinations in Cartagena de Indias",
+      "description": "Walled City, Rosario Islands, Playa Blanca and more. Discover Cartagena's best destinations and plan your trip."
+    },
+    "galeria": {
+      "title": "Cartagena de Indias Photo Gallery",
+      "description": "Beaches, sea, colonial architecture, and unforgettable experiences. Explore our photo gallery of Cartagena."
+    }
   }
 }

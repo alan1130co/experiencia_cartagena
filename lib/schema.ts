@@ -75,7 +75,7 @@ export function getTouristDestinationSchema(destino: {
     "@type": "TouristDestination",
     name: destino.nombre,
     description: destino.descripcion,
-    image: destino.imagen,
+    image: absoluteUrl(destino.imagen),
     ...(destino.coordenadas && {
       geo: {
         "@type": "GeoCoordinates",
