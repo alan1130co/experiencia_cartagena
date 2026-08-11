@@ -2,9 +2,11 @@ import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 const HERO_VIDEO = "/videos/hero/hero-principal.mp4";
+// TODO: generar este still a partir del video (frame ~1s) y optimizarlo a
+// <150 KB — ver instrucciones en public/images/hero/README.md.
+const HERO_POSTER = "/images/hero/hero-poster.jpg";
 
 export function Hero() {
   return (
@@ -13,12 +15,13 @@ export function Hero() {
         <div className="grid grid-cols-1 items-center gap-8 py-16 lg:grid-cols-12 lg:gap-16 lg:py-24">
 
           {/* ── IZQUIERDA: bloque de texto (5 de 12 columnas en desktop) ── */}
-          <ScrollReveal className="order-2 lg:order-1 lg:col-span-5 lg:col-start-1">
+          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
+          <div className="reveal-eager order-2 lg:order-1 lg:col-span-5 lg:col-start-1">
             <h1
               className="font-display font-light leading-[1.1] tracking-[-0.02em] text-primary"
               style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}
             >
-              El Caribe más hermoso de Colombia te espera
+              Tour en Cartagena: vive el Caribe más hermoso de Colombia
             </h1>
 
             <p className="mt-6 max-w-md text-body-md text-on-surface-variant">
@@ -39,16 +42,19 @@ export function Hero() {
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
             </div>
-          </ScrollReveal>
+          </div>
 
           {/* ── DERECHA: imagen en tarjeta portal (7 de 12 columnas en desktop) ── */}
-          <ScrollReveal
-            delay={150}
-            className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6"
+          {/* above-the-fold: reveal-eager, delay inline conserva el stagger que tenía ScrollReveal delay={150} */}
+          <div
+            className="reveal-eager order-1 lg:order-2 lg:col-span-7 lg:col-start-6"
+            style={{ animationDelay: "150ms" }}
           >
             <div className="relative aspect-[4/5] overflow-hidden rounded-b-[16px] rounded-t-[200px]">
               <video
                 src={HERO_VIDEO}
+                poster={HERO_POSTER}
+                preload="metadata"
                 autoPlay
                 loop
                 muted
@@ -57,7 +63,7 @@ export function Hero() {
                 className="absolute inset-0 size-full object-cover object-center"
               />
             </div>
-          </ScrollReveal>
+          </div>
 
         </div>
       </Container>

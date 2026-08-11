@@ -10,6 +10,8 @@ import { PaqueteCard } from "@/components/catalogos/PaqueteCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
 import { MENSAJES_VENTA } from "@/lib/constants";
+import { buildProductTitle, withBrand } from "@/lib/metadata";
+import { getTouristTripSchema, getBreadcrumbSchema } from "@/lib/schema";
 import { paquetes, getPaqueteBySlug } from "@/lib/data/paquetes";
 import { routing } from "@/i18n/routing";
 
@@ -28,12 +30,17 @@ export async function generateMetadata({
   const paquete = getPaqueteBySlug(slug);
   if (!paquete) return { title: "Paquete no encontrado" };
 
+  const title = buildProductTitle(paquete.nombre, [
+    `${paquete.nombre} — Tour Cartagena`,
+    `${paquete.nombre} — Cartagena`,
+  ]);
+
   return {
-    title: `${paquete.nombre} | Experiencias Tour Cartagena`,
+    title,
     description: paquete.descripcionCorta,
     keywords: [paquete.nombre, "paquete turístico Cartagena", paquete.tipo],
     openGraph: {
-      title: `${paquete.nombre} | Experiencias Tour Cartagena`,
+      title: withBrand(title),
       description: paquete.descripcionCorta,
       images: [{ url: paquete.imagenPrincipal, alt: paquete.imagenAlt }],
       type: "website",
@@ -44,9 +51,9 @@ export async function generateMetadata({
 export default async function PaqueteDetallePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const paquete = getPaqueteBySlug(slug);
   if (!paquete) notFound();
 
@@ -59,6 +66,31 @@ export default async function PaqueteDetallePage({
 
   return (
     <>
+      {/* JSON-LD: producto + ruta de navegación */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getTouristTripSchema({
+            nombre: paquete.nombre,
+            descripcion: paquete.descripcionCorta,
+            precio: paquete.precioPorPersona,
+            moneda: paquete.moneda,
+            duracion: `${paquete.duracionDias} días / ${paquete.duracionNoches} noches`,
+            imagen: paquete.imagenPrincipal,
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getBreadcrumbSchema([
+            { nombre: "Inicio", href: `/${locale}` },
+            { nombre: "Paquetes", href: `/${locale}/paquetes` },
+            { nombre: paquete.nombre, href: `/${locale}/paquetes/${paquete.slug}` },
+          ]),
+        }}
+      />
+
       {/* Breadcrumb */}
       <Section className="pt-32 lg:pt-36 pb-4">
         <Container>

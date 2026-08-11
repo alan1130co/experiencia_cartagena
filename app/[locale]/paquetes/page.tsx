@@ -11,20 +11,19 @@ export default function PaquetesPage() {
       {/* HERO */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-12 lg:pb-16">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-label-caps text-primary uppercase tracking-wider">
-                Paquetes Turísticos
-              </p>
-              <h1 className="text-headline-xl font-display font-light text-primary mt-3">
-                Todo incluido en Cartagena
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-5">
-                Combinaciones curadas de tours, embarcaciones y experiencias
-                para maximizar tu estadía en Cartagena de Indias.
-              </p>
-            </div>
-          </ScrollReveal>
+          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
+          <div className="reveal-eager max-w-3xl mx-auto text-center">
+            <p className="text-label-caps text-primary uppercase tracking-wider">
+              Paquetes Turísticos
+            </p>
+            <h1 className="text-headline-xl font-display font-light text-primary mt-3">
+              Todo incluido en Cartagena
+            </h1>
+            <p className="text-body-md text-on-surface-variant mt-5">
+              Combinaciones curadas de tours, embarcaciones y experiencias
+              para maximizar tu estadía en Cartagena de Indias.
+            </p>
+          </div>
         </Container>
       </Section>
 

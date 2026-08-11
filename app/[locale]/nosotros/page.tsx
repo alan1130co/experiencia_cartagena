@@ -63,23 +63,22 @@ export default function NosotrosPage() {
       {/* HERO */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-16 lg:pb-20">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-label-caps text-primary uppercase tracking-wider">
-                Acerca de Nosotros
-              </p>
-              <h1 className="text-headline-xl font-display font-light text-primary mt-3">
-                Pasión por el Caribe colombiano
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-5 max-w-2xl mx-auto">
-                {/** TODO: Reemplazar por subtítulo real del cliente */}
-                Somos una agencia de turismo especializada en experiencias
-                náuticas y culturales en Cartagena de Indias. Conectamos
-                viajeros con lo mejor que el Caribe colombiano tiene para
-                ofrecer.
-              </p>
-            </div>
-          </ScrollReveal>
+          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
+          <div className="reveal-eager max-w-3xl mx-auto text-center">
+            <p className="text-label-caps text-primary uppercase tracking-wider">
+              Acerca de Nosotros
+            </p>
+            <h1 className="text-headline-xl font-display font-light text-primary mt-3">
+              Pasión por el Caribe colombiano
+            </h1>
+            <p className="text-body-md text-on-surface-variant mt-5 max-w-2xl mx-auto">
+              {/** TODO: Reemplazar por subtítulo real del cliente */}
+              Somos una agencia de turismo especializada en experiencias
+              náuticas y culturales en Cartagena de Indias. Conectamos
+              viajeros con lo mejor que el Caribe colombiano tiene para
+              ofrecer.
+            </p>
+          </div>
         </Container>
       </Section>
 

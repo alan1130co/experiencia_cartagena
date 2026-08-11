@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Paquetes Turísticos | Experiencias Tour Cartagena",
+  title: "Paquetes Turísticos",
   description:
     "Paquetes todo incluido en Cartagena de Indias: tours, hospedaje, embarcaciones y experiencias premium.",
   openGraph: {

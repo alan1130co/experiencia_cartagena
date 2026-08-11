@@ -11,20 +11,19 @@ export default function ToursPage() {
       {/* HERO */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-12 lg:pb-16">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-label-caps text-primary uppercase tracking-wider">
-                Tours en Cartagena
-              </p>
-              <h1 className="text-headline-xl font-display font-light text-primary mt-3">
-                Descubre el Caribe colombiano
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-5">
-                Recorridos curados con guías locales expertos para vivir
-                Cartagena de Indias como un verdadero local.
-              </p>
-            </div>
-          </ScrollReveal>
+          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
+          <div className="reveal-eager max-w-3xl mx-auto text-center">
+            <p className="text-label-caps text-primary uppercase tracking-wider">
+              Tours en Cartagena
+            </p>
+            <h1 className="text-headline-xl font-display font-light text-primary mt-3">
+              Descubre el Caribe colombiano
+            </h1>
+            <p className="text-body-md text-on-surface-variant mt-5">
+              Recorridos curados con guías locales expertos para vivir
+              Cartagena de Indias como un verdadero local.
+            </p>
+          </div>
         </Container>
       </Section>
 

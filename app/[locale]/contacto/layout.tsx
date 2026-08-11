@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contacto | Experiencias Tour Cartagena",
+  title: "Contacto",
   description:
     "Contáctanos por WhatsApp, email o formulario. Respuestas inmediatas para tus consultas sobre tours, yates y experiencias en Cartagena.",
   openGraph: {

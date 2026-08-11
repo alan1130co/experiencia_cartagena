@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tours en Cartagena | Experiencias Tour Cartagena",
+  title: "Tours en Cartagena",
   description:
     "Descubre Cartagena con nuestros tours: Centro Histórico, Islas del Rosario, Playa Blanca, gastronomía y más. Reserva ahora por WhatsApp.",
   keywords: [

@@ -3,7 +3,6 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { CONTACTO, REDES_SOCIALES } from "@/lib/constants";
 
@@ -60,19 +59,18 @@ export default function ContactoPage() {
       {/* HERO */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-12 lg:pb-16">
         <Container>
-          <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-label-caps text-primary uppercase tracking-wider">
-                Contacto
-              </p>
-              <h1 className="text-headline-xl font-display font-light text-primary mt-3">
-                Estamos aquí para ayudarte
-              </h1>
-              <p className="text-body-md text-on-surface-variant mt-5">
-                Respondemos en menos de 1 hora por WhatsApp.
-              </p>
-            </div>
-          </ScrollReveal>
+          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
+          <div className="reveal-eager max-w-3xl mx-auto text-center">
+            <p className="text-label-caps text-primary uppercase tracking-wider">
+              Contacto
+            </p>
+            <h1 className="text-headline-xl font-display font-light text-primary mt-3">
+              Estamos aquí para ayudarte
+            </h1>
+            <p className="text-body-md text-on-surface-variant mt-5">
+              Respondemos en menos de 1 hora por WhatsApp.
+            </p>
+          </div>
         </Container>
       </Section>
 

@@ -11,6 +11,11 @@ function safeStringify(obj: object): string {
   return JSON.stringify(obj).replace(/</g, "\\u003c");
 }
 
+/** JSON-LD requiere URLs absolutas — las rutas relativas de /public no se resuelven aquí (eso solo aplica a openGraph/twitter vía metadataBase). */
+function absoluteUrl(path: string): string {
+  return path.startsWith("http") ? path : `${SITE_CONFIG.url}${path}`;
+}
+
 export function getTravelAgencySchema() {
   return safeStringify({
     "@context": "https://schema.org",
@@ -84,7 +89,8 @@ export function getTouristDestinationSchema(destino: {
 export function getTouristTripSchema(plan: {
   nombre: string;
   descripcion: string;
-  precio: number;
+  /** `null` cuando el producto no tiene tarifa fija (ej. "Consultar tarifa") — se omite `offers`. */
+  precio: number | null;
   moneda: string;
   duracion: string;
   imagen: string;
@@ -94,15 +100,30 @@ export function getTouristTripSchema(plan: {
     "@type": "TouristTrip",
     name: plan.nombre,
     description: plan.descripcion,
-    image: plan.imagen,
+    image: absoluteUrl(plan.imagen),
     touristType: "Cultural",
-    offers: {
-      "@type": "Offer",
-      price: plan.precio,
-      priceCurrency: plan.moneda,
-      availability: "https://schema.org/InStock",
-    },
+    duration: plan.duracion,
+    ...(plan.precio !== null && {
+      offers: {
+        "@type": "Offer",
+        price: plan.precio,
+        priceCurrency: plan.moneda,
+        availability: "https://schema.org/InStock",
+      },
+    }),
   });
+}
+
+/**
+ * Extrae el precio numérico de un texto como "$460.000 COP".
+ * Devuelve `null` cuando el texto no trae una tarifa fija (ej. "Consultar tarifa").
+ */
+export function parsePrecioTexto(
+  texto: string
+): { precio: number; moneda: string } | null {
+  const digitos = texto.replace(/[^\d]/g, "");
+  if (!digitos) return null;
+  return { precio: Number(digitos), moneda: texto.includes("USD") ? "USD" : "COP" };
 }
 
 export function getFAQSchema(

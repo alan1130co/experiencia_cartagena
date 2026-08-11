@@ -133,3 +133,20 @@ video {
 .reveal.is-visible {
   animation: slide-up-fade 0.6s ease forwards;
 }
+
+/*
+ * Variante "eager": mismo efecto visual que .reveal.is-visible, pero sin el
+ * gate de opacity:0 controlado por JS/IntersectionObserver — se anima al
+ * pintar, sin esperar hidratación. Reservada para el primer bloque
+ * above-the-fold de cada página (candidato a LCP); el resto del sitio sigue
+ * usando .reveal + IntersectionObserver.
+ */
+.reveal-eager {
+  animation: slide-up-fade 0.6s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-eager {
+    animation: none;
+  }
+}

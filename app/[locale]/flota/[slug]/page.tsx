@@ -28,6 +28,8 @@ import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
 import { MENSAJES_VENTA } from "@/lib/constants";
+import { buildProductTitle, withBrand } from "@/lib/metadata";
+import { getTouristTripSchema, getBreadcrumbSchema } from "@/lib/schema";
 import {
   getEmbarcacionBySlug,
   getRelacionadas,
@@ -52,8 +54,13 @@ export async function generateMetadata({
 
   if (!emb) return { title: "Embarcación no encontrada" };
 
+  const title = buildProductTitle(emb.nombre, [
+    `Tour en ${emb.nombre}, Cartagena`,
+    `Tour en ${emb.nombre}`,
+  ]);
+
   return {
-    title: `${emb.nombre} | Experiencias Tour Cartagena`,
+    title,
     description: emb.descripcionCorta,
     keywords: [
       emb.nombre,
@@ -66,7 +73,7 @@ export async function generateMetadata({
         : "bote Cartagena",
     ],
     openGraph: {
-      title: `${emb.nombre} | Experiencias Tour Cartagena`,
+      title: withBrand(title),
       description: emb.descripcionCorta,
       images: [{ url: emb.imagenPrincipal, alt: emb.imagenAlt }],
       type: "website",
@@ -103,9 +110,9 @@ function categoriaLabel(cat: string): string {
 export default async function EmbarcacionDetallePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const emb = getEmbarcacionBySlug(slug);
 
   if (!emb) notFound();
@@ -115,6 +122,31 @@ export default async function EmbarcacionDetallePage({
 
   return (
     <>
+      {/* JSON-LD: producto + ruta de navegación */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getTouristTripSchema({
+            nombre: emb.nombre,
+            descripcion: emb.descripcionCorta,
+            precio: emb.precioPorDia,
+            moneda: emb.moneda,
+            duracion: emb.duracionTipica,
+            imagen: emb.imagenPrincipal,
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getBreadcrumbSchema([
+            { nombre: "Inicio", href: `/${locale}` },
+            { nombre: "Flota", href: `/${locale}/flota` },
+            { nombre: emb.nombre, href: `/${locale}/flota/${emb.slug}` },
+          ]),
+        }}
+      />
+
       {/* Breadcrumb / volver */}
       <Section className="pt-32 lg:pt-36 pb-4">
         <Container>

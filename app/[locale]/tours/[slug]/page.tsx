@@ -9,6 +9,12 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { TourCard } from "@/components/catalogos/TourCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { MENSAJES_VENTA } from "@/lib/constants";
+import { buildProductTitle, withBrand } from "@/lib/metadata";
+import {
+  getTouristTripSchema,
+  getBreadcrumbSchema,
+  parsePrecioTexto,
+} from "@/lib/schema";
 import { toursData, getTourBySlug } from "@/lib/data/tours";
 import { routing } from "@/i18n/routing";
 
@@ -27,12 +33,17 @@ export async function generateMetadata({
   const tour = getTourBySlug(slug);
   if (!tour) return { title: "Tour no encontrado" };
 
+  const title = buildProductTitle(tour.titulo, [
+    `${tour.titulo} — Tour en Cartagena`,
+    `${tour.titulo} — Tour Cartagena`,
+  ]);
+
   return {
-    title: `${tour.titulo} | Experiencias Tour Cartagena`,
+    title,
     description: tour.descripcionBreve,
     keywords: [tour.titulo, "tour Cartagena"],
     openGraph: {
-      title: `${tour.titulo} | Experiencias Tour Cartagena`,
+      title: withBrand(title),
       description: tour.descripcionBreve,
       images: [{ url: tour.imagenPrincipal, alt: tour.titulo }],
       type: "website",
@@ -43,9 +54,9 @@ export async function generateMetadata({
 export default async function TourDetallePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const tour = getTourBySlug(slug);
   if (!tour) notFound();
 
@@ -53,8 +64,35 @@ export default async function TourDetallePage({
     .filter((t) => t.slug !== tour.slug)
     .slice(0, 3);
 
+  const precio = parsePrecioTexto(tour.precioDesde);
+
   return (
     <>
+      {/* JSON-LD: producto + ruta de navegación */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getTouristTripSchema({
+            nombre: tour.titulo,
+            descripcion: tour.descripcionBreve,
+            precio: precio?.precio ?? null,
+            moneda: precio?.moneda ?? "COP",
+            duracion: tour.horarios,
+            imagen: tour.imagenPrincipal,
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: getBreadcrumbSchema([
+            { nombre: "Inicio", href: `/${locale}` },
+            { nombre: "Tours", href: `/${locale}/tours` },
+            { nombre: tour.titulo, href: `/${locale}/tours/${tour.slug}` },
+          ]),
+        }}
+      />
+
       {/* Breadcrumb / volver */}
       <Section className="pt-32 lg:pt-36 pb-4">
         <Container>

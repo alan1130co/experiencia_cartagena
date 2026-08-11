@@ -1,6 +1,27 @@
 import type { Metadata } from "next";
 import { SITE_CONFIG } from "./constants";
 
+const TITLE_BUDGET = 60;
+const BRAND_SUFFIX = ` | ${SITE_CONFIG.shortName}`;
+
+/**
+ * Elige la primera variante de título (de más a menos rica en keyword) que
+ * quepa bajo TITLE_BUDGET una vez sumado el sufijo de marca que agrega el
+ * template del layout raíz (`%s | Cartagena Indigo`). Si ninguna cabe, cae
+ * al nombre del producto solo.
+ */
+export function buildProductTitle(name: string, variants: string[]): string {
+  const fit = variants.find(
+    (variant) => variant.length + BRAND_SUFFIX.length <= TITLE_BUDGET
+  );
+  return fit ?? name;
+}
+
+/** Sufijo de marca para `openGraph.title`, que no recibe el template del layout raíz. */
+export function withBrand(title: string): string {
+  return `${title}${BRAND_SUFFIX}`;
+}
+
 interface PageMetadataOptions {
   title: string;
   description: string;

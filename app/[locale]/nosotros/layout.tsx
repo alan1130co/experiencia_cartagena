@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Nosotros | Experiencias Tour Cartagena",
+  title: "Nosotros",
   description:
     "Conoce el equipo y la historia detrás de las mejores experiencias náuticas en Cartagena de Indias.",
   openGraph: {
