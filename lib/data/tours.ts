@@ -17,11 +17,11 @@ export const toursData: TourItem[] = [
     id: "1",
     slug: "isla-del-encanto",
     titulo: "Isla del Encanto",
-    imagenPrincipal: "/images/tours/isla-del-encanto-main.jpg",
+    imagenPrincipal: "/images/tours/isla-del-encanto-main.webp",
     galeria: [
-      "/images/tours/isla-del-encanto-1.jpg",
-      "/images/tours/isla-del-encanto-2.jpg",
-      "/images/tours/isla-del-encanto-3.jpg"
+      "/images/tours/isla-del-encanto-1.webp",
+      "/images/tours/isla-del-encanto-2.webp",
+      "/images/tours/isla-del-encanto-3.webp"
     ],
     descripcionBreve: "Disfruta de un día paradisíaco con almuerzo buffet e instalaciones exclusivas en las Islas del Rosario.",
     precioDesde: "$460.000 COP",
@@ -46,11 +46,11 @@ export const toursData: TourItem[] = [
     id: "2",
     slug: "sabai-maritimo",
     titulo: "Sabai Marítimo & Beach Venue",
-    imagenPrincipal: "/images/tours/sabai-main.jpg",
+    imagenPrincipal: "/images/tours/sabai-main.webp",
     galeria: [
-      "/images/tours/sabai-1.jpg",
-      "/images/tours/sabai-2.jpg",
-      "/images/tours/sabai-3.jpg"
+      "/images/tours/sabai-1.webp",
+      "/images/tours/sabai-2.webp",
+      "/images/tours/sabai-3.webp"
     ],
     descripcionBreve: "Pasadía exclusivo con almuerzo a la carta, cama de playa, DJ en vivo y actividades náuticas.",
     precioDesde: "$480.000 COP",
@@ -78,11 +78,11 @@ export const toursData: TourItem[] = [
     id: "3",
     slug: "mangata-beach-club",
     titulo: "Mangata Beach Club",
-    imagenPrincipal: "/images/tours/mangata-main.jpg",
+    imagenPrincipal: "/images/tours/mangata-main.webp",
     galeria: [
-      "/images/tours/mangata-1.jpg",
-      "/images/tours/mangata-2.jpg",
-      "/images/tours/mangata-3.jpg"
+      "/images/tours/mangata-1.webp",
+      "/images/tours/mangata-2.webp",
+      "/images/tours/mangata-3.webp"
     ],
     descripcionBreve: "Experiencia de lujo con 2x1 en cócteles todo el día, snorkel en avioneta hundida y almuerzo a la carta.",
     precioDesde: "$399.000 COP",
@@ -107,10 +107,10 @@ export const toursData: TourItem[] = [
     id: "4",
     slug: "tour-bahia-bequia",
     titulo: "Tour Bahía Bequia en Cartagena",
-    imagenPrincipal: "/images/tours/bequia-bahia-main.jpg",
+    imagenPrincipal: "/images/tours/bequia-bahia-main.webp",
     galeria: [
-      "/images/tours/bequia-bahia-1.jpg",
-      "/images/tours/bequia-bahia-2.jpg"
+      "/images/tours/bequia-bahia-1.webp",
+      "/images/tours/bequia-bahia-2.webp"
     ],
     descripcionBreve: "Recorrido mágico de 2 horas por la bahía de Cartagena a bordo del Barco Bequia Eagle con barra libre.",
     precioDesde: "Consultar tarifa",
@@ -133,10 +133,10 @@ export const toursData: TourItem[] = [
     id: "5",
     slug: "noche-blanca-bequia",
     titulo: "Noche Blanca Bequia",
-    imagenPrincipal: "/images/tours/noche-blanca-main.jpg",
+    imagenPrincipal: "/images/tours/noche-blanca-main.webp",
     galeria: [
-      "/images/tours/noche-blanca-1.jpg",
-      "/images/tours/noche-blanca-2.jpg"
+      "/images/tours/noche-blanca-1.webp",
+      "/images/tours/noche-blanca-2.webp"
     ],
     descripcionBreve: "Una velada inolvidable de 3 horas navegando la bahía con cena servida en plato y barra libre.",
     precioDesde: "Consultar tarifa",

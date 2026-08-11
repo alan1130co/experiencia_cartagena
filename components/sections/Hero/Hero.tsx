@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/Button";
 const HERO_VIDEO = "/videos/hero/hero-principal.mp4";
 // TODO: generar este still a partir del video (frame ~1s) y optimizarlo a
 // <150 KB — ver instrucciones en public/images/hero/README.md.
-const HERO_POSTER = "/images/hero/hero-poster.jpg";
+const HERO_POSTER = "/images/hero/hero-poster.webp";
 
 export function Hero() {
   return (
