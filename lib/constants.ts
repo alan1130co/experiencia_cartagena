@@ -43,7 +43,7 @@ export const AÑO_FUNDACION: string | null = null; // formato ISO: "2019-01-01"
 
 // ─── Copys de conversión (WhatsApp-first) ───────────────────────────────────
 // Texto de botones CTA reutilizable en tarjetas y páginas de detalle
-// (tours, paquetes, flota). El mensaje base de WhatsApp vive en
+// (tours, flota). El mensaje base de WhatsApp vive en
 // CONTACTO.whatsappMensaje — única fuente de verdad, no lo dupliques aquí.
 
 export const MENSAJES_VENTA = {
@@ -62,7 +62,6 @@ export const KEYWORDS_PRIMARIAS = [
   "viajes a Cartagena",
   "tours Cartagena de Indias",
   "agencia de viajes Cartagena",
-  "paquetes turísticos Cartagena",
   "botes y lanchas en Cartagena",
   "experiencias Cartagena Colombia",
 ] as const;
@@ -71,7 +70,6 @@ export const KEYWORDS_LONGTAIL = [
   "qué hacer en Cartagena de Indias",
   "tour Islas del Rosario desde Cartagena",
   "alquiler de yate privado en Cartagena",
-  "mejores paquetes turísticos en Cartagena",
   "guía de viaje Cartagena Colombia",
 ] as const;
 
@@ -119,7 +117,6 @@ export const NAV_LINKS: NavLink[] = [
     ],
   },
   { labelKey: "nav.tours", href: "/tours" },
-  { labelKey: "nav.paquetes", href: "/paquetes" },
   { labelKey: "nav.nosotros", href: "/nosotros" },
   { labelKey: "nav.contacto", href: "/contacto" },
 ];
@@ -144,7 +141,7 @@ export function getWhatsAppUrl(mensaje?: string): string | null {
 /** Intención de contacto: distingue un cierre directo de una consulta previa. */
 export type WhatsAppIntent = "reservar" | "consultar";
 
-/** Mensaje de WhatsApp personalizado con el nombre de un tour/paquete/embarcación. */
+/** Mensaje de WhatsApp personalizado con el nombre de un tour/embarcación. */
 export function getProductWhatsAppMessage(
   productName: string,
   intent: WhatsAppIntent = "consultar",

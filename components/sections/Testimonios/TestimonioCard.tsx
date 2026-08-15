@@ -49,7 +49,6 @@ export function TestimonioCard({ testimonio }: TestimonioCardProps) {
           <p className="font-semibold text-primary">{testimonio.nombre}</p>
           <p className="text-xs text-on-surface-variant">
             {testimonio.ubicacion}
-            {testimonio.paquete ? ` · ${testimonio.paquete}` : ""}
           </p>
         </div>
       </div>

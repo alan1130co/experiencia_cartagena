@@ -2,33 +2,33 @@ import type { FAQ } from "@/types";
 
 export const faqs: FAQ[] = [
   {
-    pregunta: "¿Qué incluyen los paquetes turísticos?",
+    pregunta: "¿Qué incluye el tour?",
     respuesta:
-      "Cada paquete incluye tours, transporte, alimentación básica y opcionalmente hospedaje. Los detalles específicos varían por paquete y los puedes consultar en la página de cada uno.",
+      "Depende de la experiencia, pero casi siempre incluye el transporte en lancha o yate, guía, impuestos de muelle y el almuerzo. Revisa el detalle en cada tarjeta antes de reservar.",
   },
   {
-    pregunta: "¿Puedo personalizar mi viaje o tour?",
+    pregunta: "¿Cómo hago para reservar y pagar?",
     respuesta:
-      "¡Por supuesto! Adaptamos itinerarios, fechas, capacidad y experiencias según tus necesidades. Contáctanos por WhatsApp para crear tu experiencia a medida.",
+      "Abonas un porcentaje inicial para apartar tu cupo y el resto lo coordinamos directamente contigo por WhatsApp.",
   },
   {
-    pregunta: "¿Cómo se realiza el pago de las reservas?",
+    pregunta: "¿Con cuánto tiempo debo reservar?",
     respuesta:
-      "Aceptamos transferencia bancaria, PSE, tarjetas de crédito y pagos en efectivo. Para reservas requerimos un abono inicial del 50% y el resto al iniciar la experiencia.",
+      "Lo ideal es hacerlo con 24 a 48 horas de anticipación. Para yates privados o fechas especiales, te sugerimos escribirnos con más tiempo.",
   },
   {
-    pregunta: "¿Cuál es la política de cancelación?",
+    pregunta: "¿Puedo cancelar o cambiar la fecha?",
     respuesta:
-      "Cancelaciones con más de 7 días de anticipación: reembolso del 100%. Entre 3-7 días: 50%. Menos de 3 días: solo se reembolsa por causa de fuerza mayor.",
+      "Sí. Escríbenos por WhatsApp con tiempo antes de tu tour y te ayudamos a revisar la reprogramación sin enredos.",
   },
   {
-    pregunta: "¿Es seguro navegar en bote por el Caribe?",
+    pregunta: "¿Es seguro viajar en las lanchas o yates?",
     respuesta:
-      "Sí, todas nuestras embarcaciones cuentan con pólizas de seguro vigentes, equipos de seguridad completos y tripulación certificada. Operamos con autorización de DIMAR (Dirección General Marítima de Colombia).",
+      "¡Totalmente! Todas nuestras embarcaciones tienen la documentación al día, chalecos salvavidas y tripulación experimentada avalada por la capitanía.",
   },
   {
-    pregunta: "¿Qué idiomas hablan los guías?",
+    pregunta: "¿Puedo armar un plan o tour personalizado?",
     respuesta:
-      "Nuestros guías hablan español e inglés. Para tours en otros idiomas (francés, alemán, portugués) podemos coordinar con anticipación.",
+      "¡Claro que sí! Escríbenos por WhatsApp y te armamos un plan a tu medida, ya sea a las islas o en un yate privado.",
   },
 ];

@@ -1,1 +1,0 @@
-export { PaqueteCard } from "./PaqueteCard";

@@ -17,7 +17,6 @@
       "inicio": "Home",
       "flota": "Fleet",
       "tours": "Tours",
-      "paquetes": "Packages",
       "nosotros": "About Us",
       "contacto": "Contact",
       "botes": "Boats & Speedboats",
@@ -42,7 +41,6 @@
     "links": {
       "tours": "Tours",
       "flota": "Fleet",
-      "paquetes": "Packages",
       "galeria": "Gallery",
       "nosotros": "About Us",
       "contacto": "Contact",

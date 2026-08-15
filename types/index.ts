@@ -1,17 +1,13 @@
 // Tipos compartidos
-export type { Moneda, Caracteristica, ItemItinerario, DiaItinerario } from "./common";
+export type { Moneda, Caracteristica, ItemItinerario } from "./common";
 
 // Flota
 export type { Bote } from "./bote";
 export type { Yate } from "./yate";
 export type { Catamaran } from "./catamaran";
 
-// Catálogo principal
-export type { Paquete } from "./paquete";
-
 // Contenido
 export type { Destino } from "./destino";
-export type { Experiencia } from "./experiencia";
 export type { GaleriaImagen } from "./galeria";
 export type { Testimonio } from "./testimonio";
 export type { FAQ } from "./faq";

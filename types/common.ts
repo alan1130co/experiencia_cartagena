@@ -1,5 +1,5 @@
 /**
- * Tipos compartidos entre Yate, Tour y Paquete.
+ * Tipos compartidos entre Yate y Tour.
  * Importar desde aquí para evitar duplicación.
  */
 
@@ -22,19 +22,4 @@ export interface ItemItinerario {
   actividad: string;
   /** Descripción opcional con más detalle. */
   descripcion?: string;
-}
-
-/**
- * Día de itinerario para paquetes multi-día.
- * Similar a ItinerarioDia de plan.ts pero incluye hospedaje opcional.
- */
-export interface DiaItinerario {
-  /** Número del día (1, 2, 3...). */
-  dia: number;
-  /** Título del día (ej: "Llegada y tour de bienvenida"). */
-  titulo: string;
-  /** Lista de actividades del día. */
-  actividades: string[];
-  /** Nombre del alojamiento de esa noche, si aplica. */
-  hospedaje?: string;
 }

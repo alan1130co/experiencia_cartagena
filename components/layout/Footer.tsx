@@ -30,7 +30,6 @@ function IconTikTok({ className }: { className?: string }) {
 const EXPLORA = [
   { key: "tours", href: "/tours" },
   { key: "flota", href: "/flota" },
-  { key: "paquetes", href: "/paquetes" },
   { key: "galeria", href: "/galeria" },
 ];
 

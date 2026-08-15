@@ -49,10 +49,10 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
       : null;
 
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col">
+    <article className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col h-full">
 
-      {/* Imagen */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+      {/* Imagen: altura fija, no depende de la foto original */}
+      <div className="relative h-56 shrink-0 overflow-hidden">
         <Image
           src={emb.imagenPrincipal}
           alt={emb.imagenAlt}
@@ -84,65 +84,68 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
           )}
         </div>
 
-        <p className="text-sm text-on-surface-variant mt-3 line-clamp-2 flex-1">
+        <p className="text-sm text-on-surface-variant mt-3 line-clamp-2">
           {emb.descripcionCorta}
         </p>
 
-        <div className="grid grid-cols-2 gap-2 mt-4 pb-4 border-b border-outline-variant">
+        <div className="grid grid-cols-2 gap-2 mt-4 pb-4 border-b border-outline-variant min-h-19">
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <Users className="w-4 h-4 text-primary flex-shrink-0" aria-hidden />
+            <Users className="w-4 h-4 text-primary shrink-0" aria-hidden />
             <span>Hasta {capacidad} pax</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-            <Ruler className="w-4 h-4 text-primary flex-shrink-0" aria-hidden />
+            <Ruler className="w-4 h-4 text-primary shrink-0" aria-hidden />
             <span>{emb.eslora}</span>
           </div>
 
           {yaticData && yaticData.cabinas > 0 && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-              <BedDouble className="w-4 h-4 text-primary flex-shrink-0" aria-hidden />
+              <BedDouble className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>{yaticData.cabinas} cabinas</span>
             </div>
           )}
           {yaticData?.banos && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-              <Bath className="w-4 h-4 text-primary flex-shrink-0" aria-hidden />
+              <Bath className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>{yaticData.banos} baños</span>
             </div>
           )}
 
           {categoria === "bote" && (emb as Bote).tripulacion > 0 && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
-              <UserCheck className="w-4 h-4 text-primary flex-shrink-0" aria-hidden />
+              <UserCheck className="w-4 h-4 text-primary shrink-0" aria-hidden />
               <span>{(emb as Bote).tripulacion} tripulantes</span>
             </div>
           )}
         </div>
 
-        <div className="flex items-end justify-between mt-4">
-          <div>
-            <p className="text-xs text-on-surface-variant">Desde</p>
-            <p className="font-display text-2xl font-light text-primary">
-              {formatPrice(emb.precioPorDia)}
-              <span className="text-xs text-on-surface-variant"> /día</span>
-            </p>
+        {/* Ancla el precio y el CTA al fondo, sin importar cuánto crezca el contenido de arriba */}
+        <div className="mt-auto">
+          <div className="flex items-end justify-between mt-4">
+            <div>
+              <p className="text-xs text-on-surface-variant">Desde</p>
+              <p className="font-display text-2xl font-light text-primary">
+                {formatPrice(emb.precioPorDia)}
+                <span className="text-xs text-on-surface-variant"> /día</span>
+              </p>
+            </div>
+            <Link
+              href={`/flota/${emb.slug}`}
+              className="text-primary text-xs font-semibold tracking-wider uppercase hover:underline underline-offset-4"
+            >
+              Ver detalles →
+            </Link>
           </div>
-          <Link
-            href={`/flota/${emb.slug}`}
-            className="text-primary text-xs font-semibold tracking-wider uppercase hover:underline underline-offset-4"
-          >
-            Ver detalles →
-          </Link>
-        </div>
 
-        <WhatsAppButton
-          variant="default"
-          size="md"
-          mensaje={`Hola, me interesa la embarcación ${emb.nombre}. ¿Está disponible?`}
-          className="w-full mt-4"
-        >
-          RESERVAR
-        </WhatsAppButton>
+          <WhatsAppButton
+            variant="default"
+            size="md"
+            mensaje={`Hola, me interesa la embarcación ${emb.nombre}. ¿Está disponible?`}
+            className="w-full mt-4"
+          >
+            RESERVAR
+          </WhatsAppButton>
+        </div>
 
       </div>
     </article>

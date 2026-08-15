@@ -22,7 +22,7 @@ export function getTravelAgencySchema() {
     "@type": ["TravelAgency", "LocalBusiness"],
     name: SITE_CONFIG.name,
     description:
-      "Agencia de viajes premium en Cartagena de Indias. Tours exclusivos, paquetes turísticos y experiencias únicas en el Caribe colombiano.",
+      "Agencia de viajes premium en Cartagena de Indias. Tours exclusivos, embarcaciones privadas y experiencias únicas en el Caribe colombiano.",
     url: SITE_CONFIG.url,
     ...(CONTACTO.telefono && { telephone: CONTACTO.telefono }),
     ...(CONTACTO.email && { email: CONTACTO.email }),

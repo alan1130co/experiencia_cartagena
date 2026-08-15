@@ -12,8 +12,6 @@ export const testimonios: Testimonio[] = [
     testimonio:
       "Una experiencia increíble en familia. El yate FIRPOL fue perfecto para los niños y el capitán muy profesional. Definitivamente volveremos.",
     fecha: "Marzo 2026",
-    paqueteSlug: "aventura-caribena",
-    paquete: "Aventura Caribeña",
     destacado: true,
   },
   {
@@ -27,8 +25,6 @@ export const testimonios: Testimonio[] = [
     testimonio:
       "Organizamos mi despedida de soltero y fue épico. El LUXURY 42FT con la mini cocina y el sonido JL hizo que el día fuera inolvidable. 100% recomendado.",
     fecha: "Febrero 2026",
-    paqueteSlug: "escapada-fin-semana",
-    paquete: "Escapada Fin de Semana",
     destacado: true,
   },
   {
@@ -42,8 +38,6 @@ export const testimonios: Testimonio[] = [
     testimonio:
       "Mi luna de miel fue mágica. La atención al detalle, el yate de lujo, la cena en la muralla... todo superó nuestras expectativas. Gracias Experiencias Tour Cartagena.",
     fecha: "Enero 2026",
-    paqueteSlug: "luna-miel-premium",
-    paquete: "Luna de Miel Premium",
     destacado: true,
   },
 ];

@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import { SITE_CONFIG } from "@/lib/constants";
 import { routing } from "@/i18n/routing";
 import { destinos } from "@/lib/data/destinos";
-import { paquetes } from "@/lib/data/paquetes";
 import { toursData } from "@/lib/data/tours";
 import { flotaCompleta } from "@/lib/data/flota";
 
@@ -46,7 +45,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       ["/flota", "weekly", 0.95],
       ["/destinos", "weekly", 0.9],
       ["/tours", "weekly", 0.9],
-      ["/paquetes", "weekly", 0.9],
       ["/nosotros", "monthly", 0.7],
       ["/blog", "weekly", 0.7],
       ["/contacto", "monthly", 0.6],
@@ -63,10 +61,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     localizedEntries(`/tours/${t.slug}`, "monthly", 0.85, now)
   );
 
-  const paqueteEntries = paquetes.flatMap((p) =>
-    localizedEntries(`/paquetes/${p.slug}`, "monthly", 0.85, now)
-  );
-
   // Las 18 fichas reales de embarcaciones viven en /flota/{slug}, no en
   // /botes/{slug} (esa ruta dinámica no existe y da 404).
   const flotaEntries = flotaCompleta.flatMap((e) =>
@@ -77,7 +71,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticEntries,
     ...destinoEntries,
     ...tourEntries,
-    ...paqueteEntries,
     ...flotaEntries,
   ];
 }

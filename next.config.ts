@@ -23,3 +23,9 @@ const nextConfig: NextConfig = {
 };
 
 export default withNextIntl(nextConfig);
+
+// Habilita bindings de Cloudflare (env vars, R2, etc.) dentro de `next dev`.
+// Debe llamarse en el archivo de config de Next.js — no requiere `await`.
+// https://opennext.js.org/cloudflare/get-started
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();

@@ -40,7 +40,7 @@ export function SiteLogo({ className, variant = "light" }: SiteLogoProps) {
       width={240}
       height={80}
       priority
-      className={cn("h-14 w-auto object-contain lg:h-20", className)}
+      className={cn("h-16 w-auto object-contain lg:h-24", className)}
       onError={() => setError(true)}
     />
   );
