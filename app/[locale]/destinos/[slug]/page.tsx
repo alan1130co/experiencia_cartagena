@@ -5,6 +5,7 @@ import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
 import { buildProductTitle, withBrand } from "@/lib/metadata";
 import { getTouristDestinationSchema, getBreadcrumbSchema } from "@/lib/schema";
 import { destinos, getDestino } from "@/lib/data/destinos";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -16,20 +17,21 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const destino = getDestino(slug);
-  if (!destino) return { title: "Destino no encontrado" };
+  const { locale, slug } = await params;
+  const destino = getDestino(slug, locale as Locale);
+  const tMeta = await getTranslations({ locale, namespace: "Detalle" });
+  if (!destino) return { title: tMeta("destinoNoEncontrado") };
 
   const title = buildProductTitle(destino.nombre, [
-    `${destino.nombre} — Destino en Cartagena`,
-    `${destino.nombre} — Cartagena`,
+    tMeta("destinoTitle1", { nombre: destino.nombre }),
+    tMeta("destinoTitle2", { nombre: destino.nombre }),
   ]);
 
   return {
     title,
-    description: `${destino.descripcionCorta} Reserva tu experiencia con nosotros.`,
+    description: `${destino.descripcionCorta} ${tMeta("destinoDescriptionSuffix")}`,
     openGraph: {
       title: withBrand(title),
       description: destino.descripcionCorta,
@@ -45,7 +47,7 @@ export default async function DestinoDetallePage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const destino = getDestino(slug);
+  const destino = getDestino(slug, locale as Locale);
   if (!destino) notFound();
 
   const t = await getTranslations("Placeholder");

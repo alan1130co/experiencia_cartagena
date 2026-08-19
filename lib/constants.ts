@@ -41,16 +41,6 @@ export const REDES_SOCIALES = {
 
 export const AÑO_FUNDACION: string | null = null; // formato ISO: "2019-01-01"
 
-// ─── Copys de conversión (WhatsApp-first) ───────────────────────────────────
-// Texto de botones CTA reutilizable en tarjetas y páginas de detalle
-// (tours, flota). El mensaje base de WhatsApp vive en
-// CONTACTO.whatsappMensaje — única fuente de verdad, no lo dupliques aquí.
-
-export const MENSAJES_VENTA = {
-  botonConsultar: "Consultar disponibilidad",
-  botonReservar: "Reservar ahora",
-} as const;
-
 // ─── Internacionalización (next-intl) ───────────────────────────────────────
 
 export const I18N_CONFIG = {
@@ -145,7 +135,15 @@ export type WhatsAppIntent = "reservar" | "consultar";
 export function getProductWhatsAppMessage(
   productName: string,
   intent: WhatsAppIntent = "consultar",
+  locale: string = "es",
 ): string {
+  if (locale === "en") {
+    const action =
+      intent === "reservar"
+        ? `I'd like to book ${productName}`
+        : `I'd like more information about ${productName}`;
+    return `Hi, ${action} at ${SITE_CONFIG.name}.`;
+  }
   const accion =
     intent === "reservar"
       ? `quiero realizar una reserva para ${productName}`

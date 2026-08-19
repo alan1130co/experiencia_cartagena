@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   Users, Ruler, Zap, Volume2, Bath, Sun,
@@ -7,6 +11,12 @@ import {
 import type { Bote } from "@/types";
 import { formatPrice } from "@/lib/utils";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import {
+  cardHoverVariants,
+  cardHoverTransition,
+  imageZoomVariants,
+  imageZoomTransition,
+} from "@/lib/motion/cardHover";
 
 const ICON_MAP: Record<string, LucideIcon> = {
   Users, Ruler, Zap, Volume2, Bath, Sun, Waves, ChefHat, Shield,
@@ -23,21 +33,36 @@ interface BoteCardProps {
 }
 
 export function BoteCard({ bote }: BoteCardProps) {
+  const t = useTranslations("Common");
+
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:shadow-card-hover">
+    <motion.article
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
+      variants={cardHoverVariants}
+      transition={cardHoverTransition}
+      className="relative flex flex-col overflow-hidden rounded-2xl bg-white"
+    >
 
       {/* Imagen */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <Image
-          src={bote.imagenPrincipal}
-          alt={bote.imagenAlt}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-        />
+      <div className="relative aspect-4/3 overflow-hidden">
+        <motion.div
+          variants={imageZoomVariants}
+          transition={imageZoomTransition}
+          className="relative size-full"
+        >
+          <Image
+            src={bote.imagenPrincipal}
+            alt={bote.imagenAlt}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover"
+          />
+        </motion.div>
         {bote.masPopular && (
           <div className="absolute left-4 top-4 rounded-full bg-brand-orange px-3 py-1.5 text-label-caps text-white shadow-md">
-            MÁS POPULAR
+            {t("mostPopular")}
           </div>
         )}
       </div>
@@ -66,17 +91,17 @@ export function BoteCard({ bote }: BoteCardProps) {
 
         <div className="mt-5 flex items-end justify-between">
           <div>
-            <p className="text-xs text-on-surface-variant">Desde</p>
+            <p className="text-xs text-on-surface-variant">{t("desde")}</p>
             <p className="font-display text-2xl font-light text-primary">
               {formatPrice(bote.precioPorDia)}
-              <span className="text-sm text-on-surface-variant"> /día</span>
+              <span className="text-sm text-on-surface-variant"> {t("perDay")}</span>
             </p>
           </div>
           <Link
             href={`/flota/${bote.slug}`}
             className="text-label-caps text-primary underline-offset-4 decoration-1 hover:underline"
           >
-            VER DETALLES
+            {t("viewDetails")}
           </Link>
         </div>
 
@@ -86,9 +111,9 @@ export function BoteCard({ bote }: BoteCardProps) {
           mensaje={`Hola, me interesa el bote ${bote.nombre}. ¿Está disponible?`}
           className="mt-5 w-full justify-center text-label-caps"
         >
-          RESERVAR POR WHATSAPP
+          {t("reserveWhatsapp")}
         </WhatsAppButton>
       </div>
-    </article>
+    </motion.article>
   );
 }

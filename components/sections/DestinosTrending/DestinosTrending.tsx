@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
@@ -6,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { Heading } from "@/components/ui/Heading";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { getDestinosDestacados } from "@/lib/data/destinos";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { cn } from "@/lib/utils";
 
 /**
@@ -28,16 +30,18 @@ const IMAGE_SIZES = [
 ];
 
 export function DestinosTrending() {
-  const destinos = getDestinosDestacados();
+  const locale = useLocale() as Locale;
+  const t = useTranslations("Home.destinos");
+  const destinos = getDestinosDestacados(locale);
 
   return (
     <Section>
       <Container>
         {/* Encabezado de sección */}
         <ScrollReveal>
-          <p className="text-label-caps text-primary">DESTINOS EN TENDENCIA</p>
+          <p className="text-label-caps text-primary">{t("eyebrow")}</p>
           <Heading level={2} className="mt-3 max-w-lg">
-            Destinos que enamoran
+            {t("title")}
           </Heading>
         </ScrollReveal>
 

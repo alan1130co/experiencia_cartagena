@@ -1,4 +1,11 @@
 import type { Yate } from "@/types";
+import { yatesEn } from "./translations/yates.en";
+import {
+  translatePlaces,
+  translateDuration,
+  mergeCaracteristicas,
+  type Locale,
+} from "@/lib/i18n/catalog-locale";
 
 export const yates: Yate[] = [
   // ── YATE 1: WELLCRAFT 33FT ────────────────────────────────────────────────
@@ -238,8 +245,35 @@ export const yates: Yate[] = [
   },
 ];
 
+// ── Localización ─────────────────────────────────────────────────────────────
+function localizeYate(yate: Yate, locale: Locale): Yate {
+  const localized: Yate = {
+    ...yate,
+    destinosPosibles: translatePlaces(yate.destinosPosibles, locale),
+    duracionTipica: translateDuration(yate.duracionTipica, locale),
+  };
+  if (locale !== "en") return localized;
+
+  const tr = yatesEn[yate.slug];
+  if (!tr) return localized;
+
+  return {
+    ...localized,
+    ...tr,
+    caracteristicas: mergeCaracteristicas(yate.caracteristicas, tr.caracteristicas),
+  };
+}
+
+export function getYates(locale: Locale): Yate[] {
+  return yates.map((y) => localizeYate(y, locale));
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
-export const yatesDestacados = yates.filter((y) => y.destacado);
-export const yatesDisponibles = yates.filter((y) => y.disponible);
-export const getYateBySlug = (slug: string) => yates.find((y) => y.slug === slug);
-export const yateMasPopular = yates.find((y) => y.masPopular);
+export const getYatesDestacados = (locale: Locale) =>
+  getYates(locale).filter((y) => y.destacado);
+export const getYatesDisponibles = (locale: Locale) =>
+  getYates(locale).filter((y) => y.disponible);
+export const getYateBySlug = (slug: string, locale: Locale) =>
+  getYates(locale).find((y) => y.slug === slug);
+export const getYateMasPopular = (locale: Locale) =>
+  getYates(locale).find((y) => y.masPopular);

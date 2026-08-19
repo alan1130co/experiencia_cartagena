@@ -1,4 +1,6 @@
 import type { Testimonio } from "@/types";
+import { testimoniosEn } from "./translations/testimonios.en";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 
 export const testimonios: Testimonio[] = [
   {
@@ -42,4 +44,16 @@ export const testimonios: Testimonio[] = [
   },
 ];
 
-export const testimoniosDestacados = testimonios.filter((t) => t.destacado);
+function localizeTestimonio(testimonio: Testimonio, locale: Locale): Testimonio {
+  if (locale !== "en") return testimonio;
+  const tr = testimoniosEn[testimonio.id];
+  if (!tr) return testimonio;
+  return { ...testimonio, ...tr };
+}
+
+export function getTestimonios(locale: Locale): Testimonio[] {
+  return testimonios.map((t) => localizeTestimonio(t, locale));
+}
+
+export const getTestimoniosDestacados = (locale: Locale) =>
+  getTestimonios(locale).filter((t) => t.destacado);

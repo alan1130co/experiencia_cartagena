@@ -114,39 +114,6 @@ video {
   display: block;
 }
 
-/* ─── Scroll Reveal Animation ────────────────────────────────────────────── */
-@keyframes slide-up-fade {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.reveal {
-  opacity: 0;
-}
-
-.reveal.is-visible {
-  animation: slide-up-fade 0.6s ease forwards;
-}
-
-/*
- * Variante "eager": mismo efecto visual que .reveal.is-visible, pero sin el
- * gate de opacity:0 controlado por JS/IntersectionObserver — se anima al
- * pintar, sin esperar hidratación. Reservada para el primer bloque
- * above-the-fold de cada página (candidato a LCP); el resto del sitio sigue
- * usando .reveal + IntersectionObserver.
- */
-.reveal-eager {
-  animation: slide-up-fade 0.6s ease forwards;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal-eager {
-    animation: none;
-  }
-}
+/* Las animaciones de entrada por scroll ahora las maneja Framer Motion
+   (ver components/layout/ScrollReveal.tsx) — respeta prefers-reduced-motion
+   vía el hook useReducedMotion(), sin necesidad de CSS aquí. */

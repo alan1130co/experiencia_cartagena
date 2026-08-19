@@ -1,17 +1,31 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Star, Quote } from "lucide-react";
 import type { Testimonio } from "@/types";
+import { cardHoverVariants, cardHoverTransition } from "@/lib/motion/cardHover";
 
 interface TestimonioCardProps {
   testimonio: Testimonio;
 }
 
 export function TestimonioCard({ testimonio }: TestimonioCardProps) {
+  const t = useTranslations("Common");
+
   return (
-    <article className="flex flex-col rounded-2xl bg-surface-container p-8">
+    <motion.article
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
+      variants={cardHoverVariants}
+      transition={cardHoverTransition}
+      className="flex flex-col rounded-2xl bg-surface-container p-8"
+    >
 
       {/* Estrellas */}
-      <div className="flex gap-1" aria-label={`${testimonio.rating} de 5 estrellas`}>
+      <div className="flex gap-1" aria-label={t("ratingLabel", { rating: testimonio.rating })}>
         {Array.from({ length: testimonio.rating }).map((_, i) => (
           <Star key={i} className="size-5 fill-brand-orange text-brand-orange" aria-hidden />
         ))}
@@ -52,6 +66,6 @@ export function TestimonioCard({ testimonio }: TestimonioCardProps) {
           </p>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

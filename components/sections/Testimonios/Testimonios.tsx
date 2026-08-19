@@ -1,11 +1,15 @@
+import { useLocale, useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
-import { testimoniosDestacados } from "@/lib/data/testimonios";
+import { getTestimoniosDestacados } from "@/lib/data/testimonios";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { TestimonioCard } from "./TestimonioCard";
 
 export function Testimonios() {
-  const testimonios = testimoniosDestacados.slice(0, 3);
+  const locale = useLocale() as Locale;
+  const t = useTranslations("Home.testimonios");
+  const testimonios = getTestimoniosDestacados(locale).slice(0, 3);
 
   return (
     <Section className="bg-surface">
@@ -13,13 +17,12 @@ export function Testimonios() {
 
         <ScrollReveal>
           <div className="mx-auto mb-12 max-w-2xl text-center lg:mb-16">
-            <p className="text-label-caps text-primary">TESTIMONIOS</p>
+            <p className="text-label-caps text-primary">{t("eyebrow")}</p>
             <h2 className="mt-3 font-display text-4xl font-light leading-tight text-primary lg:text-headline-xl">
-              Historias de nuestros viajeros
+              {t("title")}
             </h2>
             <p className="mt-5 text-body-md text-on-surface-variant">
-              Más de 500 familias han confiado en nosotros para vivir
-              experiencias únicas en Cartagena de Indias.
+              {t("description")}
             </p>
           </div>
         </ScrollReveal>

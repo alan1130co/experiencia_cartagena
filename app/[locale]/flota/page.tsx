@@ -1,6 +1,8 @@
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
+import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { FlotaFiltrosYGrid } from "@/components/catalogos/FlotaFiltrosYGrid";
 
@@ -50,25 +52,25 @@ function GridSkeleton() {
 }
 
 export default function FlotaPage() {
+  const t = useTranslations("FlotaPage");
+
   return (
     <>
       {/* HERO — HTML estático desde el primer byte, no depende de searchParams */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-12 lg:pb-16">
         <Container>
-          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
-          <div className="reveal-eager max-w-3xl mx-auto text-center">
+          {/* above-the-fold: eager (Framer Motion anima al montar, sin esperar scroll) */}
+          <ScrollReveal eager className="max-w-3xl mx-auto text-center">
             <p className="text-label-caps text-primary uppercase tracking-wider">
-              Nuestra Flota
+              {t("eyebrow")}
             </p>
             <h1 className="font-display text-4xl lg:text-headline-xl font-light text-primary mt-3 leading-tight">
-              Embarcaciones en el Caribe
+              {t("title")}
             </h1>
             <p className="text-body-md text-on-surface-variant mt-5 max-w-2xl mx-auto">
-              Botes rápidos para el día, yates con cabinas para dormir, y
-              catamaranes Powercat para grupos grandes. Selecciona la
-              embarcación perfecta para tu experiencia en Cartagena.
+              {t("description")}
             </p>
-          </div>
+          </ScrollReveal>
         </Container>
       </Section>
 
@@ -82,18 +84,17 @@ export default function FlotaPage() {
         <Container>
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="font-display text-headline-lg font-light mb-4">
-              ¿No encuentras lo que buscas?
+              {t("ctaTitle")}
             </h2>
             <p className="text-body-md text-white/90 mb-6">
-              Contáctanos por WhatsApp y te ayudamos a diseñar la experiencia
-              perfecta para tu grupo.
+              {t("ctaText")}
             </p>
             <WhatsAppButton
               variant="default"
               size="lg"
-              mensaje="Hola, quiero ayuda para elegir la embarcación ideal para mi viaje en Cartagena."
+              mensaje={t("whatsappMessage")}
             >
-              HABLAR POR WHATSAPP
+              {t("ctaButton")}
             </WhatsAppButton>
           </div>
         </Container>

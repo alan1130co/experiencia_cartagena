@@ -4,10 +4,194 @@
     "es": "Español",
     "en": "Inglés"
   },
+  "Common": {
+    "desde": "Desde",
+    "perDay": "/día",
+    "viewDetails": "VER DETALLES",
+    "viewDetailsArrow": "Ver detalles →",
+    "reserve": "RESERVAR",
+    "reserveTour": "RESERVAR TOUR",
+    "reserveWhatsapp": "RESERVAR POR WHATSAPP",
+    "mostPopular": "MÁS POPULAR",
+    "upToPax": "Hasta {count} pax",
+    "cabins": "{count, plural, one {# cabina} other {# cabinas}}",
+    "bathrooms": "{count, plural, one {# baño} other {# baños}}",
+    "crew": "{count, plural, one {# tripulante} other {# tripulantes}}",
+    "ratingLabel": "{rating} de 5 estrellas",
+    "reservarAhora": "Reservar ahora",
+    "consultarDisponibilidad": "Consultar disponibilidad",
+    "tourInterestMessage": "Hola, me interesa el tour: {titulo}",
+    "category": {
+      "bote": "Bote",
+      "yate": "Yate",
+      "catamaran": "Catamarán"
+    },
+    "boteTipo": {
+      "lancha": "Lancha",
+      "lancha-lujo": "Lancha de Lujo",
+      "bote": "Bote"
+    }
+  },
+  "Detalle": {
+    "volverFlota": "Volver a la flota",
+    "volverTours": "Volver a tours",
+    "embarcacionTitle1": "Tour en {nombre}, Cartagena",
+    "embarcacionTitle2": "Tour en {nombre}",
+    "tourTitle1": "{titulo} — Tour en Cartagena",
+    "tourTitle2": "{titulo} — Tour Cartagena",
+    "destinoTitle1": "{nombre} — Destino en Cartagena",
+    "destinoTitle2": "{nombre} — Cartagena",
+    "destinoDescriptionSuffix": "Reserva tu experiencia con nosotros.",
+    "embarcacionNoEncontrada": "Embarcación no encontrada",
+    "tourNoEncontrado": "Tour no encontrado",
+    "destinoNoEncontrado": "Destino no encontrado",
+    "queIncluye": "¿Qué incluye?",
+    "noIncluido": "No incluido",
+    "tambienTePuedeInteresar": "También te puede interesar",
+    "respuestaInmediataSinCompromiso": "Respuesta inmediata. Sin compromiso.",
+    "respuestaInmediataWhatsapp": "Respuesta inmediata por WhatsApp. Cotización personalizada según fecha y grupo.",
+    "acercaDe": "Acerca de {nombre}",
+    "listoParaReservar": "¿Listo para reservar {nombre}?",
+    "destinosPosibles": "Destinos posibles",
+    "duracionTipica": "Duración típica: {duracion}",
+    "horarios": "Horarios",
+    "salida": "Salida",
+    "puntoDeEncuentro": "Punto de encuentro"
+  },
+  "FlotaPage": {
+    "eyebrow": "Nuestra Flota",
+    "title": "Embarcaciones en el Caribe",
+    "description": "Botes rápidos para el día, yates con cabinas para dormir, y catamaranes Powercat para grupos grandes. Selecciona la embarcación perfecta para tu experiencia en Cartagena.",
+    "ctaTitle": "¿No encuentras lo que buscas?",
+    "ctaText": "Contáctanos por WhatsApp y te ayudamos a diseñar la experiencia perfecta para tu grupo.",
+    "ctaButton": "HABLAR POR WHATSAPP",
+    "whatsappMessage": "Hola, quiero ayuda para elegir la embarcación ideal para mi viaje en Cartagena."
+  },
+  "ToursPage": {
+    "eyebrow": "Tours en Cartagena",
+    "title": "Descubre el Caribe colombiano",
+    "description": "Recorridos curados con guías locales expertos para vivir Cartagena de Indias como un verdadero local.",
+    "showingCount": "Mostrando {count} {count, plural, one {tour} other {tours}}",
+    "ctaTitle": "¿No encuentras lo que buscas?",
+    "ctaText": "Diseñamos tours personalizados según tu grupo y preferencias. Contáctanos por WhatsApp.",
+    "ctaButton": "HABLAR POR WHATSAPP",
+    "whatsappMessage": "Hola, quiero un tour personalizado para mi grupo"
+  },
+  "FlotaFiltros": {
+    "categorias": {
+      "todos": "Todos",
+      "botes": "Botes",
+      "yates": "Yates",
+      "catamaranes": "Catamaranes"
+    },
+    "ordenarPor": "Ordenar por:",
+    "orden": {
+      "precioAsc": "Precio: menor a mayor",
+      "precioDesc": "Precio: mayor a menor",
+      "capacidad": "Mayor capacidad",
+      "nombre": "Nombre A-Z"
+    },
+    "proximamente": "Próximamente",
+    "proximamenteTexto": "Estamos preparando esta categoría. Mientras tanto, explora nuestros botes y lanchas disponibles.",
+    "verBotesDisponibles": "Ver botes disponibles →",
+    "mostrando": "Mostrando",
+    "de": "de",
+    "vesselWord": "{count, plural, one {embarcación} other {embarcaciones}}",
+    "enCategoria": "en categoría \"{categoria}\"",
+    "pagina": "Página",
+    "paginaAnterior": "Página anterior",
+    "paginaSiguiente": "Página siguiente",
+    "paginaNum": "Página {num}",
+    "anterior": "Anterior",
+    "siguiente": "Siguiente"
+  },
+  "WhatsAppButton": {
+    "tooltip": "¿Hablamos? 💬",
+    "ariaLabel": "Contactar por WhatsApp",
+    "defaultLabel": "RESERVAR POR WHATSAPP",
+    "fallbackAlert": "{name}\n\nReservas por WhatsApp próximamente disponibles. ¡Gracias por tu interés!"
+  },
+  "Home": {
+    "hero": {
+      "ariaLabel": "Bienvenida — Cartagena Índigo",
+      "title": "Tour en Cartagena: vive el Caribe más hermoso de Colombia",
+      "description": "Descubre experiencias seleccionadas en la joya colonial de América. Desde paseos en yate privados hasta cenas bajo las estrellas.",
+      "ctaExplore": "Explorar Destinos",
+      "ctaGallery": "Ver Galería",
+      "videoAriaLabel": "Calles coloniales de la Ciudad Amurallada de Cartagena de Indias"
+    },
+    "destinos": {
+      "eyebrow": "DESTINOS EN TENDENCIA",
+      "title": "Destinos que enamoran"
+    },
+    "botes": {
+      "eyebrow": "Nuestra flota",
+      "title": "Embarcaciones premium en el Caribe",
+      "description": "Botes, yates y catamaranes para vivir experiencias únicas en Cartagena. Selecciona la embarcación perfecta para tu viaje.",
+      "ctaViewAll": "VER TODA LA FLOTA"
+    },
+    "yates": {
+      "eyebrow": "Yates con cabinas",
+      "title": "Yates de lujo para dormir a bordo",
+      "description": "Embarcaciones con cabinas, cocina equipada y aire acondicionado para experiencias premium de varios días en el Caribe colombiano.",
+      "ctaViewAll": "VER TODOS LOS YATES"
+    },
+    "catamaranes": {
+      "eyebrow": "Catamaranes Powercat",
+      "title": "Catamaranes para grupos grandes",
+      "description": "Powercats Leopard y Lagoon con capacidad hasta 35 personas, ideales para eventos especiales y celebraciones en el Caribe.",
+      "ctaViewAll": "VER TODOS LOS CATAMARANES"
+    },
+    "tours": {
+      "eyebrow": "TOURS POPULARES",
+      "title": "Descubre Cartagena",
+      "description": "Los recorridos más solicitados por nuestros viajeros — desde la Ciudad Amurallada hasta las Islas del Rosario.",
+      "ctaViewAll": "VER TODOS LOS TOURS"
+    },
+    "testimonios": {
+      "eyebrow": "TESTIMONIOS",
+      "title": "Historias de nuestros viajeros",
+      "description": "Más de 500 familias han confiado en nosotros para vivir experiencias únicas en Cartagena de Indias."
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Todo lo que necesitas saber",
+      "description": "Las dudas más comunes antes de reservar, resueltas.",
+      "notFoundTitle": "¿No encontraste lo que buscabas?",
+      "notFoundText": "Nuestro equipo responde en menos de 1 hora por WhatsApp.",
+      "ctaWhatsapp": "PREGUNTAR POR WHATSAPP",
+      "whatsappMessage": "Hola, tengo una pregunta sobre sus tours y experiencias en Cartagena.",
+      "items": [
+        {
+          "pregunta": "¿Qué incluye el tour?",
+          "respuesta": "Depende de la experiencia, pero casi siempre incluye el transporte en lancha o yate, guía, impuestos de muelle y el almuerzo. Revisa el detalle en cada tarjeta antes de reservar."
+        },
+        {
+          "pregunta": "¿Cómo hago para reservar y pagar?",
+          "respuesta": "Abonas un porcentaje inicial para apartar tu cupo y el resto lo coordinamos directamente contigo por WhatsApp."
+        },
+        {
+          "pregunta": "¿Con cuánto tiempo debo reservar?",
+          "respuesta": "Lo ideal es hacerlo con 24 a 48 horas de anticipación. Para yates privados o fechas especiales, te sugerimos escribirnos con más tiempo."
+        },
+        {
+          "pregunta": "¿Puedo cancelar o cambiar la fecha?",
+          "respuesta": "Sí. Escríbenos por WhatsApp con tiempo antes de tu tour y te ayudamos a revisar la reprogramación sin enredos."
+        },
+        {
+          "pregunta": "¿Es seguro viajar en las lanchas o yates?",
+          "respuesta": "¡Totalmente! Todas nuestras embarcaciones tienen la documentación al día, chalecos salvavidas y tripulación experimentada avalada por la capitanía."
+        },
+        {
+          "pregunta": "¿Puedo armar un plan o tour personalizado?",
+          "respuesta": "¡Claro que sí! Escríbenos por WhatsApp y te armamos un plan a tu medida, ya sea a las islas o en un yate privado."
+        }
+      ]
+    }
+  },
   "Header": {
     "navAriaLabel": "Navegación principal",
     "logoAriaLabel": "{name} — inicio",
-    "myAccount": "Mi cuenta",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "reserveWhatsapp": "Reservar por WhatsApp",
@@ -51,7 +235,8 @@
     "reserveText": "Escríbenos y creamos juntos tu experiencia perfecta en el Caribe.",
     "reserveWhatsappMessage": "Hola, quiero planear mi próxima aventura en Cartagena",
     "planNow": "Planear ahora",
-    "copyright": "© {year} {name}. Todos los derechos reservados."
+    "copyright": "© {year} {name}. Todos los derechos reservados.",
+    "credit": "Desarrollado por <name>Alan-Dev</name>"
   },
   "NotFound": {
     "eyebrow": "Error 404",
@@ -97,7 +282,27 @@
       "description": "Explora las 28 fotos que capturan la esencia de Cartagena de Indias: playas, mar, arquitectura colonial y experiencias inolvidables."
     }
   },
+  "Layout": {
+    "skipToContent": "Ir al contenido principal",
+    "whatsappMessage": "Hola, me interesa conocer las experiencias de turismo en Cartagena"
+  },
   "Metadata": {
+    "home": {
+      "title": "Tour en Cartagena de Indias",
+      "description": "Descubre Cartagena de Indias con tours exclusivos, yates privados y experiencias únicas en el Caribe colombiano."
+    },
+    "flota": {
+      "title": "Nuestra Flota",
+      "description": "Botes, yates y catamaranes para tus experiencias en Cartagena de Indias. Embarcaciones premium con tripulación profesional para Islas del Rosario, Barú y la Bahía.",
+      "ogTitle": "Nuestra Flota — Experiencias Tour Cartagena",
+      "ogDescription": "Embarcaciones premium para vivir el Caribe colombiano"
+    },
+    "tours": {
+      "title": "Tours en Cartagena",
+      "description": "Descubre Cartagena con nuestros tours: Centro Histórico, Islas del Rosario, Playa Blanca, gastronomía y más. Reserva ahora por WhatsApp.",
+      "ogTitle": "Tours en Cartagena — Experiencias Tour Cartagena",
+      "ogDescription": "10+ tours para descubrir el Caribe colombiano"
+    },
     "blog": {
       "title": "Blog de Viajes a Cartagena de Indias",
       "description": "Guías de viaje, gastronomía e historia de Cartagena de Indias. Muy pronto — escríbenos por WhatsApp mientras tanto."

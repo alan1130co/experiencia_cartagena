@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 import { Section } from "@/components/ui/Section";
@@ -7,6 +8,7 @@ import { toursData } from "@/lib/data/tours";
 import { TourCard } from "./TourCard";
 
 export function ToursPopulares() {
+  const t = useTranslations("Home.tours");
   const tours = toursData.slice(0, 3);
 
   return (
@@ -15,13 +17,12 @@ export function ToursPopulares() {
 
         <ScrollReveal>
           <div className="mx-auto mb-12 max-w-2xl text-center lg:mb-16">
-            <p className="text-label-caps text-primary">TOURS POPULARES</p>
+            <p className="text-label-caps text-primary">{t("eyebrow")}</p>
             <h2 className="mt-3 font-display text-4xl font-light leading-tight text-primary lg:text-headline-xl">
-              Descubre Cartagena
+              {t("title")}
             </h2>
             <p className="mt-5 text-body-md text-on-surface-variant">
-              Los recorridos más solicitados por nuestros viajeros — desde la
-              Ciudad Amurallada hasta las Islas del Rosario.
+              {t("description")}
             </p>
           </div>
         </ScrollReveal>
@@ -40,7 +41,7 @@ export function ToursPopulares() {
               href="/tours"
               className="inline-flex items-center gap-2 font-semibold text-primary transition-all duration-200 hover:gap-3"
             >
-              <span className="text-label-caps">VER TODOS LOS TOURS</span>
+              <span className="text-label-caps">{t("ctaViewAll")}</span>
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </div>

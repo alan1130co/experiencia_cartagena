@@ -1,4 +1,11 @@
 import type { Catamaran } from "@/types";
+import { catamaranesEn } from "./translations/catamaranes.en";
+import {
+  translatePlaces,
+  translateDuration,
+  mergeCaracteristicas,
+  type Locale,
+} from "@/lib/i18n/catalog-locale";
 
 export const catamaranes: Catamaran[] = [
   // ── CATAMARÁN 1: VALHALLA ─────────────────────────────────────────────────
@@ -326,8 +333,35 @@ export const catamaranes: Catamaran[] = [
   },
 ];
 
+// ── Localización ─────────────────────────────────────────────────────────────
+function localizeCatamaran(catamaran: Catamaran, locale: Locale): Catamaran {
+  const localized: Catamaran = {
+    ...catamaran,
+    destinosPosibles: translatePlaces(catamaran.destinosPosibles, locale),
+    duracionTipica: translateDuration(catamaran.duracionTipica, locale),
+  };
+  if (locale !== "en") return localized;
+
+  const tr = catamaranesEn[catamaran.slug];
+  if (!tr) return localized;
+
+  return {
+    ...localized,
+    ...tr,
+    caracteristicas: mergeCaracteristicas(catamaran.caracteristicas, tr.caracteristicas),
+  };
+}
+
+export function getCatamaranes(locale: Locale): Catamaran[] {
+  return catamaranes.map((c) => localizeCatamaran(c, locale));
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
-export const catamaranesDestacados = catamaranes.filter((c) => c.destacado);
-export const catamaranesDisponibles = catamaranes.filter((c) => c.disponible);
-export const getCatamaranBySlug = (slug: string) => catamaranes.find((c) => c.slug === slug);
-export const catamaranMasPopular = catamaranes.find((c) => c.masPopular);
+export const getCatamaranesDestacados = (locale: Locale) =>
+  getCatamaranes(locale).filter((c) => c.destacado);
+export const getCatamaranesDisponibles = (locale: Locale) =>
+  getCatamaranes(locale).filter((c) => c.disponible);
+export const getCatamaranBySlug = (slug: string, locale: Locale) =>
+  getCatamaranes(locale).find((c) => c.slug === slug);
+export const getCatamaranMasPopular = (locale: Locale) =>
+  getCatamaranes(locale).find((c) => c.masPopular);

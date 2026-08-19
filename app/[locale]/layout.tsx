@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -54,6 +54,7 @@ export default async function RootLayout({
   }
 
   setRequestLocale(locale);
+  const t = await getTranslations("Layout");
 
   return (
     <html
@@ -70,7 +71,7 @@ export default async function RootLayout({
             href="#main-content"
             className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-on-primary focus:text-label-caps focus:outline-none"
           >
-            Ir al contenido principal
+            {t("skipToContent")}
           </a>
           <Header />
           <main id="main-content" className="flex-1">
@@ -79,7 +80,7 @@ export default async function RootLayout({
           <Footer />
           <WhatsAppButton
             variant="floating"
-            mensaje="Hola, me interesa conocer las experiencias de turismo en Cartagena"
+            mensaje={t("whatsappMessage")}
           />
         </NextIntlClientProvider>
       </body>

@@ -1,11 +1,15 @@
+import { useTranslations } from "next-intl";
 import { Section } from "@/components/ui/Section";
 import { Container } from "@/components/ui/Container";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { Accordion } from "@/components/ui/Accordion";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
-import { faqs } from "@/lib/data/faq";
+import type { FAQ as FAQItem } from "@/types";
 
 export function FAQ() {
+  const t = useTranslations("Home.faq");
+  const items = t.raw("items") as FAQItem[];
+
   return (
     <Section>
       <Container>
@@ -13,35 +17,35 @@ export function FAQ() {
 
           <ScrollReveal>
             <div className="mb-12 text-center lg:mb-16">
-              <p className="text-label-caps text-primary">Preguntas frecuentes</p>
+              <p className="text-label-caps text-primary">{t("eyebrow")}</p>
               <h2 className="mt-3 font-display text-4xl font-light leading-tight text-primary lg:text-headline-xl">
-                Todo lo que necesitas saber
+                {t("title")}
               </h2>
               <p className="mt-5 text-body-md text-on-surface-variant">
-                Las dudas más comunes antes de reservar, resueltas.
+                {t("description")}
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal delay={120}>
-            <Accordion items={faqs} />
+            <Accordion items={items} />
           </ScrollReveal>
 
           <ScrollReveal delay={200}>
             <div className="mt-12 rounded-2xl bg-surface p-8 text-center">
               <p className="font-semibold text-on-surface">
-                ¿No encontraste lo que buscabas?
+                {t("notFoundTitle")}
               </p>
               <p className="mt-2 text-body-md text-on-surface-variant">
-                Nuestro equipo responde en menos de 1 hora por WhatsApp.
+                {t("notFoundText")}
               </p>
               <WhatsAppButton
                 variant="default"
                 size="md"
-                mensaje="Hola, tengo una pregunta sobre sus tours y experiencias en Cartagena."
+                mensaje={t("whatsappMessage")}
                 className="mt-6 mx-auto"
               >
-                PREGUNTAR POR WHATSAPP
+                {t("ctaWhatsapp")}
               </WhatsAppButton>
             </div>
           </ScrollReveal>

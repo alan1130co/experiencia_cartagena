@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 interface FlotaFiltersProps {
@@ -15,12 +16,7 @@ interface FlotaFiltersProps {
   onOrdenChange: (orden: string) => void;
 }
 
-const CATEGORIAS = [
-  { key: "todos", label: "Todos" },
-  { key: "botes", label: "Botes" },
-  { key: "yates", label: "Yates" },
-  { key: "catamaranes", label: "Catamaranes" },
-] as const;
+const CATEGORIA_KEYS = ["todos", "botes", "yates", "catamaranes"] as const;
 
 export function FlotaFilters({
   categoriaActiva,
@@ -29,26 +25,28 @@ export function FlotaFilters({
   ordenActivo,
   onOrdenChange,
 }: FlotaFiltersProps) {
+  const t = useTranslations("FlotaFiltros");
+
   return (
     <div className="bg-surface rounded-2xl p-4 lg:p-6 border border-outline-variant">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
 
         {/* Filtros de categoría */}
         <div className="flex flex-wrap gap-2">
-          {CATEGORIAS.map((cat) => (
+          {CATEGORIA_KEYS.map((key) => (
             <button
-              key={cat.key}
+              key={key}
               type="button"
-              onClick={() => onCategoriaChange(cat.key)}
+              onClick={() => onCategoriaChange(key)}
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-semibold transition-all",
-                categoriaActiva === cat.key
+                categoriaActiva === key
                   ? "bg-primary text-white shadow-md"
                   : "bg-white text-on-surface-variant border border-outline-variant hover:border-primary hover:text-primary",
               )}
             >
-              {cat.label}{" "}
-              <span className="opacity-70">({counts[cat.key]})</span>
+              {t(`categorias.${key}`)}{" "}
+              <span className="opacity-70">({counts[key]})</span>
             </button>
           ))}
         </div>
@@ -59,7 +57,7 @@ export function FlotaFilters({
             htmlFor="orden-select"
             className="text-sm text-on-surface-variant whitespace-nowrap"
           >
-            Ordenar por:
+            {t("ordenarPor")}
           </label>
           <select
             id="orden-select"
@@ -67,10 +65,10 @@ export function FlotaFilters({
             onChange={(e) => onOrdenChange(e.target.value)}
             className="px-3 py-2 rounded-xl border border-outline-variant text-sm bg-white focus:outline-none focus:border-primary transition-colors cursor-pointer"
           >
-            <option value="precio-asc">Precio: menor a mayor</option>
-            <option value="precio-desc">Precio: mayor a menor</option>
-            <option value="capacidad-desc">Mayor capacidad</option>
-            <option value="nombre">Nombre A-Z</option>
+            <option value="precio-asc">{t("orden.precioAsc")}</option>
+            <option value="precio-desc">{t("orden.precioDesc")}</option>
+            <option value="capacidad-desc">{t("orden.capacidad")}</option>
+            <option value="nombre">{t("orden.nombre")}</option>
           </select>
         </div>
 

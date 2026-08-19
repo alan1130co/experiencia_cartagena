@@ -1,4 +1,11 @@
 import type { Bote } from "@/types";
+import { botesEn } from "./translations/botes.en";
+import {
+  translatePlaces,
+  translateDuration,
+  mergeCaracteristicas,
+  type Locale,
+} from "@/lib/i18n/catalog-locale";
 
 export const botes: Bote[] = [
   // ── BOTE 1: FIRPOL 42FT ───────────────────────────────────────────────────
@@ -441,8 +448,35 @@ export const botes: Bote[] = [
   },
 ];
 
+// ── Localización ─────────────────────────────────────────────────────────────
+function localizeBote(bote: Bote, locale: Locale): Bote {
+  const localized: Bote = {
+    ...bote,
+    destinosPosibles: translatePlaces(bote.destinosPosibles, locale),
+    duracionTipica: translateDuration(bote.duracionTipica, locale),
+  };
+  if (locale !== "en") return localized;
+
+  const tr = botesEn[bote.slug];
+  if (!tr) return localized;
+
+  return {
+    ...localized,
+    ...tr,
+    caracteristicas: mergeCaracteristicas(bote.caracteristicas, tr.caracteristicas),
+  };
+}
+
+export function getBotes(locale: Locale): Bote[] {
+  return botes.map((b) => localizeBote(b, locale));
+}
+
 // ── Helpers ────────────────────────────────────────────────────────────────────
-export const botesDestacados = botes.filter((b) => b.destacado);
-export const botesDisponibles = botes.filter((b) => b.disponible);
-export const boteMasPopular = botes.find((b) => b.masPopular);
-export const getBoteBySlug = (slug: string) => botes.find((b) => b.slug === slug);
+export const getBotesDestacados = (locale: Locale) =>
+  getBotes(locale).filter((b) => b.destacado);
+export const getBotesDisponibles = (locale: Locale) =>
+  getBotes(locale).filter((b) => b.disponible);
+export const getBoteMasPopular = (locale: Locale) =>
+  getBotes(locale).find((b) => b.masPopular);
+export const getBoteBySlug = (slug: string, locale: Locale) =>
+  getBotes(locale).find((b) => b.slug === slug);

@@ -3,7 +3,7 @@
 import { Link, usePathname } from "@/i18n/navigation";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Menu, X, User, ChevronDown, Anchor, Ship, Sailboat } from "lucide-react";
+import { Menu, X, ChevronDown, Anchor, Ship, Sailboat } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { Container } from "@/components/ui/Container";
@@ -135,21 +135,12 @@ export function Header() {
             })}
           </ul>
 
-          {/* ── Derecha: Idioma + Usuario + WhatsApp CTA + Hamburger ───────── */}
+          {/* ── Derecha: Idioma + WhatsApp CTA + Hamburger ──────────────────── */}
           <div className="flex shrink-0 items-center gap-3">
             {/* Selector de idioma — solo desktop */}
             <span className="hidden lg:inline-flex">
               <LanguageSwitcher />
             </span>
-
-            {/* Icono usuario — solo desktop */}
-            <Link
-              href="/login"
-              aria-label={t("myAccount")}
-              className="hidden rounded-md p-1.5 text-outline transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 lg:flex"
-            >
-              <User className="size-5" aria-hidden />
-            </Link>
 
             {/* Botón WhatsApp — solo desktop */}
             <span className="hidden lg:inline-flex">
@@ -238,18 +229,6 @@ export function Header() {
                   </li>
                 );
               })}
-
-              {/* Mi cuenta */}
-              <li>
-                <Link
-                  href="/login"
-                  onClick={close}
-                  className="flex items-center gap-2 rounded-md px-4 py-2.5 text-label-caps text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
-                >
-                  <User className="size-4 shrink-0" aria-hidden />
-                  {t("myAccount")}
-                </Link>
-              </li>
 
               {/* Selector de idioma */}
               <li className="px-4 py-2.5">

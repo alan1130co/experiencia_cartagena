@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ArrowLeft, Check, X, MapPin, Calendar } from "lucide-react";
 
@@ -8,14 +9,14 @@ import { Section } from "@/components/ui/Section";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { TourCard } from "@/components/catalogos/TourCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
-import { MENSAJES_VENTA } from "@/lib/constants";
 import { buildProductTitle, withBrand } from "@/lib/metadata";
 import {
   getTouristTripSchema,
   getBreadcrumbSchema,
   parsePrecioTexto,
 } from "@/lib/schema";
-import { toursData, getTourBySlug } from "@/lib/data/tours";
+import { toursData, getTours, getTourBySlug } from "@/lib/data/tours";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
@@ -27,15 +28,16 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const tour = getTourBySlug(slug);
-  if (!tour) return { title: "Tour no encontrado" };
+  const { locale, slug } = await params;
+  const tour = getTourBySlug(slug, locale as Locale);
+  const tMeta = await getTranslations({ locale, namespace: "Detalle" });
+  if (!tour) return { title: tMeta("tourNoEncontrado") };
 
   const title = buildProductTitle(tour.titulo, [
-    `${tour.titulo} — Tour en Cartagena`,
-    `${tour.titulo} — Tour Cartagena`,
+    tMeta("tourTitle1", { titulo: tour.titulo }),
+    tMeta("tourTitle2", { titulo: tour.titulo }),
   ]);
 
   return {
@@ -57,14 +59,16 @@ export default async function TourDetallePage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const tour = getTourBySlug(slug);
+  const tour = getTourBySlug(slug, locale as Locale);
   if (!tour) notFound();
 
-  const relacionados = toursData
+  const relacionados = getTours(locale as Locale)
     .filter((t) => t.slug !== tour.slug)
     .slice(0, 3);
 
   const precio = parsePrecioTexto(tour.precioDesde);
+  const t = await getTranslations("Detalle");
+  const tCommon = await getTranslations("Common");
 
   return (
     <>
@@ -101,7 +105,7 @@ export default async function TourDetallePage({
             className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Volver a tours
+            {t("volverTours")}
           </Link>
         </Container>
       </Section>
@@ -134,7 +138,7 @@ export default async function TourDetallePage({
                 <div className="flex items-center gap-3">
                   <Calendar className="w-5 h-5 text-primary shrink-0" />
                   <div>
-                    <p className="text-xs text-on-surface-variant">Horarios</p>
+                    <p className="text-xs text-on-surface-variant">{t("horarios")}</p>
                     <p className="text-sm font-semibold text-on-surface">
                       {tour.horarios}
                     </p>
@@ -143,7 +147,7 @@ export default async function TourDetallePage({
                 <div className="flex items-center gap-3">
                   <MapPin className="w-5 h-5 text-primary shrink-0" />
                   <div>
-                    <p className="text-xs text-on-surface-variant">Salida</p>
+                    <p className="text-xs text-on-surface-variant">{t("salida")}</p>
                     <p className="text-sm font-semibold text-on-surface line-clamp-2">
                       {tour.ubicacionSalida}
                     </p>
@@ -153,7 +157,7 @@ export default async function TourDetallePage({
 
               {/* Precio */}
               <div className="mt-8 pb-6 border-b border-outline-variant">
-                <p className="text-sm text-on-surface-variant">Desde</p>
+                <p className="text-sm text-on-surface-variant">{tCommon("desde")}</p>
                 <p className="text-headline-lg font-display text-primary font-light mt-1">
                   {tour.precioDesde}
                 </p>
@@ -168,10 +172,10 @@ export default async function TourDetallePage({
                   intent="reservar"
                   className="w-full"
                 >
-                  {MENSAJES_VENTA.botonReservar}
+                  {tCommon("reservarAhora")}
                 </WhatsAppButton>
                 <p className="text-xs text-on-surface-variant text-center">
-                  Respuesta inmediata. Sin compromiso.
+                  {t("respuestaInmediataSinCompromiso")}
                 </p>
               </div>
             </div>
@@ -186,7 +190,7 @@ export default async function TourDetallePage({
             {/* Qué incluye */}
             <div>
               <h3 className="text-headline-md font-display text-primary font-light mb-6">
-                ¿Qué incluye?
+                {t("queIncluye")}
               </h3>
               <ul className="space-y-3">
                 {tour.incluye.map((item, i) => (
@@ -203,7 +207,7 @@ export default async function TourDetallePage({
             {/* No incluido */}
             <div>
               <h3 className="text-headline-md font-display text-primary font-light mb-6">
-                No incluido
+                {t("noIncluido")}
               </h3>
               <ul className="space-y-3">
                 {tour.noIncluye.map((item, i) => (
@@ -224,7 +228,7 @@ export default async function TourDetallePage({
       <Section className="py-12">
         <Container className="max-w-3xl">
           <h3 className="text-headline-md font-display text-primary font-light mb-4">
-            Punto de encuentro
+            {t("puntoDeEncuentro")}
           </h3>
           <div className="flex items-start gap-3 p-6 bg-surface rounded-2xl border border-outline-variant">
             <MapPin className="w-5 h-5 text-primary shrink-0 mt-0.5" />
@@ -245,7 +249,7 @@ export default async function TourDetallePage({
         <Section className="py-16 lg:py-20 bg-surface">
           <Container>
             <h3 className="text-headline-lg font-display text-primary font-light text-center mb-12">
-              También te puede interesar
+              {t("tambienTePuedeInteresar")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {relacionados.map((rel) => (
@@ -261,11 +265,10 @@ export default async function TourDetallePage({
         <Container>
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-headline-lg font-display font-light mb-4">
-              ¿Listo para reservar {tour.titulo}?
+              {t("listoParaReservar", { nombre: tour.titulo })}
             </h2>
             <p className="text-body-md text-white/90 mb-6">
-              Respuesta inmediata por WhatsApp. Cotización personalizada según
-              fecha y grupo.
+              {t("respuestaInmediataWhatsapp")}
             </p>
             <WhatsAppButton
               variant="default"
@@ -273,7 +276,7 @@ export default async function TourDetallePage({
               productName={tour.titulo}
               intent="consultar"
             >
-              {MENSAJES_VENTA.botonConsultar}
+              {tCommon("consultarDisponibilidad")}
             </WhatsAppButton>
           </div>
         </Container>

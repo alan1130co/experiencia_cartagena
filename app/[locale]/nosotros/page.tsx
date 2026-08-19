@@ -63,8 +63,8 @@ export default function NosotrosPage() {
       {/* HERO */}
       <Section className="bg-surface pt-36 lg:pt-44 pb-16 lg:pb-20">
         <Container>
-          {/* above-the-fold: reveal-eager (CSS puro), no ScrollReveal/IntersectionObserver */}
-          <div className="reveal-eager max-w-3xl mx-auto text-center">
+          {/* above-the-fold: eager (Framer Motion anima al montar, sin esperar scroll) */}
+          <ScrollReveal eager className="max-w-3xl mx-auto text-center">
             <p className="text-label-caps text-primary uppercase tracking-wider">
               Acerca de Nosotros
             </p>
@@ -78,7 +78,7 @@ export default function NosotrosPage() {
               viajeros con lo mejor que el Caribe colombiano tiene para
               ofrecer.
             </p>
-          </div>
+          </ScrollReveal>
         </Container>
       </Section>
 

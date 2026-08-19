@@ -1,3 +1,6 @@
+import { toursEn } from "./translations/tours.en";
+import type { Locale } from "@/lib/i18n/catalog-locale";
+
 export interface TourItem {
   id: string;
   slug: string;
@@ -157,6 +160,17 @@ export const toursData: TourItem[] = [
   }
 ];
 
-export function getTourBySlug(slug: string): TourItem | undefined {
-  return toursData.find((t) => t.slug === slug);
+function localizeTour(tour: TourItem, locale: Locale): TourItem {
+  if (locale !== "en") return tour;
+  const tr = toursEn[tour.slug];
+  if (!tr) return tour;
+  return { ...tour, ...tr };
+}
+
+export function getTours(locale: Locale): TourItem[] {
+  return toursData.map((t) => localizeTour(t, locale));
+}
+
+export function getTourBySlug(slug: string, locale: Locale): TourItem | undefined {
+  return getTours(locale).find((t) => t.slug === slug);
 }

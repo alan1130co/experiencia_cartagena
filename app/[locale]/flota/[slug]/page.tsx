@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
   ArrowLeft,
@@ -27,7 +28,6 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
-import { MENSAJES_VENTA } from "@/lib/constants";
 import { buildProductTitle, withBrand } from "@/lib/metadata";
 import { getTouristTripSchema, getBreadcrumbSchema } from "@/lib/schema";
 import {
@@ -35,6 +35,7 @@ import {
   getRelacionadas,
   flotaCompleta,
 } from "@/lib/data/flota";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { routing } from "@/i18n/routing";
 
 // SSG: pre-generar las páginas (18 embarcaciones × 2 locales) en build time
@@ -47,16 +48,17 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  const emb = getEmbarcacionBySlug(slug);
+  const { locale, slug } = await params;
+  const emb = getEmbarcacionBySlug(slug, locale as Locale);
+  const tMeta = await getTranslations({ locale, namespace: "Detalle" });
 
-  if (!emb) return { title: "Embarcación no encontrada" };
+  if (!emb) return { title: tMeta("embarcacionNoEncontrada") };
 
   const title = buildProductTitle(emb.nombre, [
-    `Tour en ${emb.nombre}, Cartagena`,
-    `Tour en ${emb.nombre}`,
+    tMeta("embarcacionTitle1", { nombre: emb.nombre }),
+    tMeta("embarcacionTitle2", { nombre: emb.nombre }),
   ]);
 
   return {
@@ -98,27 +100,20 @@ const ICON_MAP: Record<string, any> = {
   Waves,
 };
 
-function categoriaLabel(cat: string): string {
-  return (
-    ({ bote: "Bote", yate: "Yate", catamaran: "Catamarán" } as Record<
-      string,
-      string
-    >)[cat] ?? cat
-  );
-}
-
 export default async function EmbarcacionDetallePage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-  const emb = getEmbarcacionBySlug(slug);
+  const emb = getEmbarcacionBySlug(slug, locale as Locale);
 
   if (!emb) notFound();
 
-  const relacionadas = getRelacionadas(emb, 3);
-  const categoriaTexto = categoriaLabel(emb._categoria);
+  const relacionadas = getRelacionadas(emb, locale as Locale, 3);
+  const t = await getTranslations("Detalle");
+  const tCommon = await getTranslations("Common");
+  const categoriaTexto = tCommon(`category.${emb._categoria}`);
 
   return (
     <>
@@ -155,7 +150,7 @@ export default async function EmbarcacionDetallePage({
             className="inline-flex items-center gap-2 text-sm text-on-surface-variant hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Volver a la flota
+            {t("volverFlota")}
           </Link>
         </Container>
       </Section>
@@ -182,7 +177,7 @@ export default async function EmbarcacionDetallePage({
                 </span>
                 {emb.masPopular && (
                   <span className="bg-brand-orange text-white px-3 py-1 rounded-full text-xs font-bold tracking-wider">
-                    MÁS POPULAR
+                    {tCommon("mostPopular")}
                   </span>
                 )}
               </div>
@@ -223,12 +218,12 @@ export default async function EmbarcacionDetallePage({
 
               {/* Precio */}
               <div className="mt-8 pb-6 border-b border-outline-variant">
-                <p className="text-sm text-on-surface-variant">Desde</p>
+                <p className="text-sm text-on-surface-variant">{tCommon("desde")}</p>
                 <p className="text-headline-lg font-display text-primary font-light mt-1">
                   {formatPrice(emb.precioPorDia)}
                   <span className="text-base font-sans text-on-surface-variant">
                     {" "}
-                    /día
+                    {tCommon("perDay")}
                   </span>
                 </p>
                 {emb.capacidadAdicional && (
@@ -247,10 +242,10 @@ export default async function EmbarcacionDetallePage({
                   intent="reservar"
                   className="w-full"
                 >
-                  {MENSAJES_VENTA.botonReservar}
+                  {tCommon("reservarAhora")}
                 </WhatsAppButton>
                 <p className="text-xs text-on-surface-variant text-center">
-                  Respuesta inmediata. Sin compromiso.
+                  {t("respuestaInmediataSinCompromiso")}
                 </p>
               </div>
             </div>
@@ -262,7 +257,7 @@ export default async function EmbarcacionDetallePage({
       <Section className="py-12 bg-surface">
         <Container className="max-w-3xl">
           <h2 className="text-headline-md font-display text-primary font-light mb-6">
-            Acerca de {emb.nombre}
+            {t("acercaDe", { nombre: emb.nombre })}
           </h2>
           <p className="text-body-lg text-on-surface leading-relaxed whitespace-pre-line">
             {emb.descripcionLarga}
@@ -277,7 +272,7 @@ export default async function EmbarcacionDetallePage({
 
             <div>
               <h3 className="text-headline-md font-display text-primary font-light mb-6">
-                ¿Qué incluye?
+                {t("queIncluye")}
               </h3>
               <ul className="space-y-3">
                 {emb.incluye.map((item, i) => (
@@ -293,7 +288,7 @@ export default async function EmbarcacionDetallePage({
 
             <div>
               <h3 className="text-headline-md font-display text-primary font-light mb-6">
-                No incluido
+                {t("noIncluido")}
               </h3>
               <ul className="space-y-3">
                 {emb.noIncluye.map((item, i) => (
@@ -314,7 +309,7 @@ export default async function EmbarcacionDetallePage({
       <Section className="py-12 bg-surface">
         <Container className="max-w-3xl">
           <h3 className="text-headline-md font-display text-primary font-light mb-6">
-            Destinos posibles
+            {t("destinosPosibles")}
           </h3>
           <div className="flex flex-wrap gap-3">
             {emb.destinosPosibles.map((destino) => (
@@ -328,7 +323,7 @@ export default async function EmbarcacionDetallePage({
             ))}
           </div>
           <p className="text-sm text-on-surface-variant mt-4 italic">
-            Duración típica: {emb.duracionTipica}
+            {t("duracionTipica", { duracion: emb.duracionTipica })}
           </p>
         </Container>
       </Section>
@@ -338,7 +333,7 @@ export default async function EmbarcacionDetallePage({
         <Section className="py-16 lg:py-20">
           <Container>
             <h3 className="text-headline-lg font-display text-primary font-light text-center mb-12">
-              También te puede interesar
+              {t("tambienTePuedeInteresar")}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {relacionadas.map((rel) => (
@@ -358,11 +353,10 @@ export default async function EmbarcacionDetallePage({
         <Container>
           <div className="text-center max-w-2xl mx-auto">
             <h2 className="text-headline-lg font-display font-light mb-4">
-              ¿Listo para reservar {emb.nombre}?
+              {t("listoParaReservar", { nombre: emb.nombre })}
             </h2>
             <p className="text-body-md text-white/90 mb-6">
-              Respuesta inmediata por WhatsApp. Cotización personalizada según
-              fecha y grupo.
+              {t("respuestaInmediataWhatsapp")}
             </p>
             <WhatsAppButton
               variant="default"
@@ -370,7 +364,7 @@ export default async function EmbarcacionDetallePage({
               productName={emb.nombre}
               intent="consultar"
             >
-              {MENSAJES_VENTA.botonConsultar}
+              {tCommon("consultarDisponibilidad")}
             </WhatsAppButton>
           </div>
         </Container>

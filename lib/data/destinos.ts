@@ -1,4 +1,6 @@
 import type { Destino } from "@/types";
+import { destinosEn } from "./translations/destinos.en";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 
 export const destinos: Destino[] = [
   {
@@ -70,10 +72,21 @@ export const destinos: Destino[] = [
   },
 ];
 
-export function getDestino(slug: string): Destino | undefined {
-  return destinos.find((d) => d.slug === slug);
+function localizeDestino(destino: Destino, locale: Locale): Destino {
+  if (locale !== "en") return destino;
+  const tr = destinosEn[destino.slug];
+  if (!tr) return destino;
+  return { ...destino, ...tr };
 }
 
-export function getDestinosDestacados(): Destino[] {
-  return destinos.filter((d) => d.destacado);
+export function getDestinos(locale: Locale): Destino[] {
+  return destinos.map((d) => localizeDestino(d, locale));
+}
+
+export function getDestino(slug: string, locale: Locale): Destino | undefined {
+  return getDestinos(locale).find((d) => d.slug === slug);
+}
+
+export function getDestinosDestacados(locale: Locale): Destino[] {
+  return getDestinos(locale).filter((d) => d.destacado);
 }

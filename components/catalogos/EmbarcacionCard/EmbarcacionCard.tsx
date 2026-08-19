@@ -1,4 +1,8 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Users, Ruler, BedDouble, Bath, UserCheck } from "lucide-react";
 import type { Bote } from "@/types/bote";
@@ -6,6 +10,12 @@ import type { Yate } from "@/types/yate";
 import type { Catamaran } from "@/types/catamaran";
 import { formatPrice } from "@/lib/utils";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import {
+  cardHoverVariants,
+  cardHoverTransition,
+  imageZoomVariants,
+  imageZoomTransition,
+} from "@/lib/motion/cardHover";
 
 type Categoria = "bote" | "yate" | "catamaran";
 
@@ -14,26 +24,8 @@ export interface EmbarcacionCardProps {
   categoria: Categoria;
 }
 
-const CATEGORIA_LABEL: Record<Categoria, string> = {
-  bote: "Bote",
-  yate: "Yate",
-  catamaran: "Catamarán",
-};
-
-const BOTE_TIPO_LABEL: Record<string, string> = {
-  "lancha": "Lancha",
-  "lancha-lujo": "Lancha de Lujo",
-  "bote": "Bote",
-};
-
-function tipoEspecifico(emb: Bote | Yate | Catamaran, categoria: Categoria): string | null {
-  if (categoria === "bote") return BOTE_TIPO_LABEL[(emb as Bote).tipo] ?? null;
-  if (categoria === "catamaran") {
-    const c = emb as Catamaran;
-    return `${c.marca} ${c.modelo}`;
-  }
-  return null;
-}
+const BOTE_TIPO_KEYS = ["lancha", "lancha-lujo", "bote"] as const;
+type BoteTipoKey = (typeof BOTE_TIPO_KEYS)[number];
 
 function getCapacidad(emb: Bote | Yate | Catamaran, categoria: Categoria): number {
   if (categoria === "catamaran") return (emb as Catamaran).capacidadVerano;
@@ -41,7 +33,19 @@ function getCapacidad(emb: Bote | Yate | Catamaran, categoria: Categoria): numbe
 }
 
 export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCardProps) {
-  const tipoLabel = tipoEspecifico(emb, categoria);
+  const t = useTranslations("Common");
+
+  let tipoLabel: string | null = null;
+  if (categoria === "bote") {
+    const tipo = (emb as Bote).tipo;
+    tipoLabel = BOTE_TIPO_KEYS.includes(tipo as BoteTipoKey)
+      ? t(`boteTipo.${tipo as BoteTipoKey}`)
+      : null;
+  } else if (categoria === "catamaran") {
+    const c = emb as Catamaran;
+    tipoLabel = `${c.marca} ${c.modelo}`;
+  }
+
   const capacidad = getCapacidad(emb, categoria);
   const yaticData =
     categoria === "yate" || categoria === "catamaran"
@@ -49,24 +53,37 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
       : null;
 
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 flex flex-col h-full">
+    <motion.article
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
+      variants={cardHoverVariants}
+      transition={cardHoverTransition}
+      className="bg-white rounded-2xl overflow-hidden flex flex-col h-full"
+    >
 
       {/* Imagen: altura fija, no depende de la foto original */}
       <div className="relative h-56 shrink-0 overflow-hidden">
-        <Image
-          src={emb.imagenPrincipal}
-          alt={emb.imagenAlt}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
+        <motion.div
+          variants={imageZoomVariants}
+          transition={imageZoomTransition}
+          className="relative size-full"
+        >
+          <Image
+            src={emb.imagenPrincipal}
+            alt={emb.imagenAlt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
+        </motion.div>
         {emb.masPopular && (
           <div className="absolute top-4 left-4 bg-brand-orange text-white px-3 py-1.5 rounded-full text-xs font-bold tracking-wider shadow-md">
-            MÁS POPULAR
+            {t("mostPopular")}
           </div>
         )}
         <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-primary px-3 py-1.5 rounded-full text-xs font-semibold">
-          {CATEGORIA_LABEL[categoria]}
+          {t(`category.${categoria}`)}
         </div>
       </div>
 
@@ -91,7 +108,7 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
         <div className="grid grid-cols-2 gap-2 mt-4 pb-4 border-b border-outline-variant min-h-19">
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
             <Users className="w-4 h-4 text-primary shrink-0" aria-hidden />
-            <span>Hasta {capacidad} pax</span>
+            <span>{t("upToPax", { count: capacidad })}</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-on-surface-variant">
             <Ruler className="w-4 h-4 text-primary shrink-0" aria-hidden />
@@ -101,20 +118,20 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
           {yaticData && yaticData.cabinas > 0 && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
               <BedDouble className="w-4 h-4 text-primary shrink-0" aria-hidden />
-              <span>{yaticData.cabinas} cabinas</span>
+              <span>{t("cabins", { count: yaticData.cabinas })}</span>
             </div>
           )}
           {yaticData?.banos && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
               <Bath className="w-4 h-4 text-primary shrink-0" aria-hidden />
-              <span>{yaticData.banos} baños</span>
+              <span>{t("bathrooms", { count: yaticData.banos })}</span>
             </div>
           )}
 
           {categoria === "bote" && (emb as Bote).tripulacion > 0 && (
             <div className="flex items-center gap-2 text-sm text-on-surface-variant">
               <UserCheck className="w-4 h-4 text-primary shrink-0" aria-hidden />
-              <span>{(emb as Bote).tripulacion} tripulantes</span>
+              <span>{t("crew", { count: (emb as Bote).tripulacion })}</span>
             </div>
           )}
         </div>
@@ -123,17 +140,17 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
         <div className="mt-auto">
           <div className="flex items-end justify-between mt-4">
             <div>
-              <p className="text-xs text-on-surface-variant">Desde</p>
+              <p className="text-xs text-on-surface-variant">{t("desde")}</p>
               <p className="font-display text-2xl font-light text-primary">
                 {formatPrice(emb.precioPorDia)}
-                <span className="text-xs text-on-surface-variant"> /día</span>
+                <span className="text-xs text-on-surface-variant"> {t("perDay")}</span>
               </p>
             </div>
             <Link
               href={`/flota/${emb.slug}`}
               className="text-primary text-xs font-semibold tracking-wider uppercase hover:underline underline-offset-4"
             >
-              Ver detalles →
+              {t("viewDetailsArrow")}
             </Link>
           </div>
 
@@ -143,11 +160,11 @@ export function EmbarcacionCard({ embarcacion: emb, categoria }: EmbarcacionCard
             mensaje={`Hola, me interesa la embarcación ${emb.nombre}. ¿Está disponible?`}
             className="w-full mt-4"
           >
-            RESERVAR
+            {t("reserve")}
           </WhatsAppButton>
         </div>
 
       </div>
-    </article>
+    </motion.article>
   );
 }

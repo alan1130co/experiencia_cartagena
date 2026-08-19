@@ -1,12 +1,18 @@
+import { useLocale, useTranslations } from "next-intl";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
-import { catamaranesDestacados } from "@/lib/data/catamaranes";
+import { getCatamaranesDestacados } from "@/lib/data/catamaranes";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 
 export function CatamaranesDestacados() {
+  const locale = useLocale() as Locale;
+  const t = useTranslations("Home.catamaranes");
+  const catamaranes = getCatamaranesDestacados(locale);
+
   return (
     <Section className="bg-surface py-20 lg:py-28">
       <Container>
@@ -14,20 +20,19 @@ export function CatamaranesDestacados() {
         <ScrollReveal>
           <div className="text-center max-w-2xl mx-auto mb-12 lg:mb-16">
             <p className="text-label-caps text-primary uppercase tracking-wider">
-              Catamaranes Powercat
+              {t("eyebrow")}
             </p>
             <h2 className="text-headline-lg lg:text-headline-xl text-primary font-display font-light mt-3">
-              Catamaranes para grupos grandes
+              {t("title")}
             </h2>
             <p className="text-body-md text-on-surface-variant mt-5">
-              Powercats Leopard y Lagoon con capacidad hasta 35 personas,
-              ideales para eventos especiales y celebraciones en el Caribe.
+              {t("description")}
             </p>
           </div>
         </ScrollReveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {catamaranesDestacados.slice(0, 3).map((catamaran) => (
+          {catamaranes.slice(0, 3).map((catamaran) => (
             <ScrollReveal key={catamaran.id}>
               <EmbarcacionCard embarcacion={catamaran} categoria="catamaran" />
             </ScrollReveal>
@@ -39,7 +44,7 @@ export function CatamaranesDestacados() {
             href="/catamaranes"
             className="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all"
           >
-            <span className="text-label-caps tracking-wider">VER TODOS LOS CATAMARANES</span>
+            <span className="text-label-caps tracking-wider">{t("ctaViewAll")}</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

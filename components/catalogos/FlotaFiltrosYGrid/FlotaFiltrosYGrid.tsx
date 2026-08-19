@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
@@ -9,9 +10,10 @@ import { Section } from "@/components/ui/Section";
 import { ScrollReveal } from "@/components/layout/ScrollReveal";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { FlotaFilters } from "@/components/catalogos/FlotaFilters";
-import { botes } from "@/lib/data/botes";
-import { yates } from "@/lib/data/yates";
-import { catamaranes } from "@/lib/data/catamaranes";
+import { getBotes } from "@/lib/data/botes";
+import { getYates } from "@/lib/data/yates";
+import { getCatamaranes } from "@/lib/data/catamaranes";
+import type { Locale } from "@/lib/i18n/catalog-locale";
 
 const ITEMS_POR_PAGINA = 4;
 
@@ -27,6 +29,12 @@ function categoriaValida(cat: string | null): string {
 export function FlotaFiltrosYGrid() {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const locale = useLocale() as Locale;
+  const t = useTranslations("FlotaFiltros");
+
+  const botes = useMemo(() => getBotes(locale), [locale]);
+  const yates = useMemo(() => getYates(locale), [locale]);
+  const catamaranes = useMemo(() => getCatamaranes(locale), [locale]);
 
   const [categoria, setCategoria] = useState<string>(
     categoriaValida(searchParams.get("categoria"))
@@ -54,7 +62,7 @@ export function FlotaFiltrosYGrid() {
     ...botes.map((b) => ({ ...b, _categoria: "bote" as const, _capacidad: b.capacidadPersonas })),
     ...yates.map((y) => ({ ...y, _categoria: "yate" as const, _capacidad: y.capacidadPersonas })),
     ...catamaranes.map((c) => ({ ...c, _categoria: "catamaran" as const, _capacidad: c.capacidadVerano })),
-  ], []);
+  ], [botes, yates, catamaranes]);
 
   const filtradas = useMemo(() => {
     if (categoria === "botes") return todasEmbarcaciones.filter((e) => e._categoria === "bote");
@@ -124,18 +132,17 @@ export function FlotaFiltrosYGrid() {
           {ordenadas.length === 0 ? (
             <div className="text-center py-20">
               <p className="font-display text-headline-md font-light text-primary mb-4">
-                Próximamente
+                {t("proximamente")}
               </p>
               <p className="text-body-md text-on-surface-variant max-w-md mx-auto">
-                Estamos preparando esta categoría. Mientras tanto, explora
-                nuestros botes y lanchas disponibles.
+                {t("proximamenteTexto")}
               </p>
               <button
                 type="button"
                 onClick={() => handleCategoriaChange("botes")}
                 className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full font-semibold hover:bg-primary/90 transition-colors"
               >
-                Ver botes disponibles →
+                {t("verBotesDisponibles")}
               </button>
             </div>
           ) : (
@@ -143,19 +150,20 @@ export function FlotaFiltrosYGrid() {
               {/* Contador */}
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
                 <p className="text-sm text-on-surface-variant">
-                  Mostrando{" "}
+                  {t("mostrando")}{" "}
                   <strong className="text-primary">
                     {inicio + 1}-{Math.min(fin, ordenadas.length)}
                   </strong>{" "}
-                  de{" "}
+                  {t("de")}{" "}
                   <strong className="text-primary">{ordenadas.length}</strong>
-                  {ordenadas.length === 1 ? " embarcación" : " embarcaciones"}
-                  {categoria !== "todos" && ` en categoría "${categoria}"`}
+                  {" "}{t("vesselWord", { count: ordenadas.length })}
+                  {categoria !== "todos" &&
+                    ` ${t("enCategoria", { categoria: t(`categorias.${categoria}`) })}`}
                 </p>
                 {totalPaginas > 1 && (
                   <p className="text-sm text-on-surface-variant">
-                    Página{" "}
-                    <strong className="text-primary">{paginaActual}</strong> de{" "}
+                    {t("pagina")}{" "}
+                    <strong className="text-primary">{paginaActual}</strong> {t("de")}{" "}
                     <strong className="text-primary">{totalPaginas}</strong>
                   </p>
                 )}
@@ -180,10 +188,10 @@ export function FlotaFiltrosYGrid() {
                     onClick={() => cambiarPagina(paginaActual - 1)}
                     disabled={paginaActual === 1}
                     className="px-4 py-2 rounded-full text-sm font-semibold bg-white border border-outline-variant hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-outline-variant disabled:hover:text-on-surface-variant transition-all flex items-center gap-2"
-                    aria-label="Página anterior"
+                    aria-label={t("paginaAnterior")}
                   >
                     <ChevronLeft className="w-4 h-4" />
-                    Anterior
+                    {t("anterior")}
                   </button>
 
                   <div className="flex gap-1">
@@ -196,7 +204,7 @@ export function FlotaFiltrosYGrid() {
                             ? "bg-primary text-white shadow-md"
                             : "bg-white border border-outline-variant text-on-surface-variant hover:border-primary hover:text-primary"
                         }`}
-                        aria-label={`Página ${num}`}
+                        aria-label={t("paginaNum", { num })}
                         aria-current={num === paginaActual ? "page" : undefined}
                       >
                         {num}
@@ -208,9 +216,9 @@ export function FlotaFiltrosYGrid() {
                     onClick={() => cambiarPagina(paginaActual + 1)}
                     disabled={paginaActual === totalPaginas}
                     className="px-4 py-2 rounded-full text-sm font-semibold bg-white border border-outline-variant hover:border-primary hover:text-primary disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-outline-variant disabled:hover:text-on-surface-variant transition-all flex items-center gap-2"
-                    aria-label="Página siguiente"
+                    aria-label={t("paginaSiguiente")}
                   >
-                    Siguiente
+                    {t("siguiente")}
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

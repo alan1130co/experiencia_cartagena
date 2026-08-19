@@ -1,26 +1,51 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Clock, MapPin } from "lucide-react";
 import type { TourItem } from "@/lib/data/tours";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import {
+  cardHoverVariants,
+  cardHoverTransition,
+  imageZoomVariants,
+  imageZoomTransition,
+} from "@/lib/motion/cardHover";
 
 interface TourCardProps {
   tour: TourItem;
 }
 
 export function TourCard({ tour }: TourCardProps) {
+  const t = useTranslations("Common");
+
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card transition-all duration-300 hover:shadow-card-hover">
+    <motion.article
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
+      variants={cardHoverVariants}
+      transition={cardHoverTransition}
+      className="flex h-full flex-col overflow-hidden rounded-2xl bg-white"
+    >
 
       {/* Imagen */}
       <div className="relative aspect-4/3 overflow-hidden bg-surface">
-        <Image
-          src={tour.imagenPrincipal}
-          alt={tour.titulo}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-contain transition-transform duration-500 group-hover:scale-105"
-        />
+        <motion.div
+          variants={imageZoomVariants}
+          transition={imageZoomTransition}
+          className="relative size-full"
+        >
+          <Image
+            src={tour.imagenPrincipal}
+            alt={tour.titulo}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-contain"
+          />
+        </motion.div>
       </div>
 
       {/* Contenido */}
@@ -48,7 +73,7 @@ export function TourCard({ tour }: TourCardProps) {
         <div className="mt-auto flex flex-col gap-5 pt-5">
           <div className="flex items-end justify-between">
             <div>
-              <p className="text-xs text-on-surface-variant">Desde</p>
+              <p className="text-xs text-on-surface-variant">{t("desde")}</p>
               <p className="font-display text-2xl font-light text-primary">
                 {tour.precioDesde}
               </p>
@@ -57,7 +82,7 @@ export function TourCard({ tour }: TourCardProps) {
               href={`/tours/${tour.slug}`}
               className="text-label-caps text-primary underline-offset-4 decoration-1 hover:underline"
             >
-              VER DETALLES
+              {t("viewDetails")}
             </Link>
           </div>
 
@@ -67,10 +92,10 @@ export function TourCard({ tour }: TourCardProps) {
             mensaje={`Hola, me interesa el tour ${tour.titulo}. ¿Tienen disponibilidad?`}
             className="w-full justify-center text-label-caps"
           >
-            RESERVAR TOUR
+            {t("reserveTour")}
           </WhatsAppButton>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
 }

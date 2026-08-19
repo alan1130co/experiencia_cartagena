@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import {
   SITE_CONFIG,
@@ -41,21 +42,22 @@ function WhatsAppIcon({ className }: { className?: string }) {
 // ── Lógica de click centralizada ──────────────────────────────────────────────
 
 function handleWhatsAppClick(
-  mensaje?: string,
-  productName?: string,
-  intent?: WhatsAppIntent,
+  mensaje: string | undefined,
+  productName: string | undefined,
+  intent: WhatsAppIntent | undefined,
+  locale: string,
+  fallbackAlert: string,
 ) {
   const texto =
-    mensaje ?? (productName ? getProductWhatsAppMessage(productName, intent) : undefined);
+    mensaje ??
+    (productName ? getProductWhatsAppMessage(productName, intent, locale) : undefined);
   const url = getWhatsAppUrl(texto);
 
   if (!url) {
     console.warn(
       "[WhatsApp] Número no configurado. Actualiza CONTACTO.whatsapp en lib/constants.ts",
     );
-    alert(
-      `${SITE_CONFIG.name}\n\nReservas por WhatsApp próximamente disponibles. ¡Gracias por tu interés!`,
-    );
+    alert(fallbackAlert);
     return;
   }
 
@@ -73,6 +75,8 @@ export function WhatsAppButton({
   className,
   size = "md",
 }: WhatsAppButtonProps) {
+  const locale = useLocale();
+  const t = useTranslations("WhatsAppButton");
   const sizeClasses = {
     sm: "px-3 py-1.5 text-sm",
     md: "px-5 py-2.5 text-base",
@@ -85,6 +89,9 @@ export function WhatsAppButton({
     lg: "size-6 shrink-0",
   };
 
+  const onClick = () =>
+    handleWhatsAppClick(mensaje, productName, intent, locale, t("fallbackAlert", { name: SITE_CONFIG.name }));
+
   // ── Floating ──────────────────────────────────────────────────────────────
   if (variant === "floating") {
     return (
@@ -96,7 +103,7 @@ export function WhatsAppButton({
       >
         {/* Tooltip — visible al hover del grupo; pointer-events-none para no interferir */}
         <span className="pointer-events-none whitespace-nowrap rounded-lg border border-outline-variant bg-white px-3 py-1.5 text-sm text-on-surface shadow-md opacity-0 transition-opacity duration-200 group-hover/wa:opacity-100">
-          ¿Hablamos? 💬
+          {t("tooltip")}
         </span>
 
         {/* Botón con ring de pulso */}
@@ -104,8 +111,8 @@ export function WhatsAppButton({
           <span className="absolute inset-0 animate-ping rounded-full bg-brand-green opacity-25 [animation-duration:3s]" />
           <button
             type="button"
-            onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
-            aria-label="Contactar por WhatsApp"
+            onClick={onClick}
+            aria-label={t("ariaLabel")}
             className="relative flex h-14 w-14 items-center justify-center rounded-full bg-brand-green text-white shadow-lg transition-all duration-200 hover:scale-110 hover:bg-green-600 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2 lg:h-16 lg:w-16"
           >
             <WhatsAppIcon className="h-7 w-7 lg:h-8 lg:w-8" />
@@ -120,7 +127,7 @@ export function WhatsAppButton({
     return (
       <button
         type="button"
-        onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
+        onClick={onClick}
         className={cn(
           "inline-flex items-center justify-center gap-1.5 text-brand-green underline-offset-2 hover:text-green-700 hover:underline",
           className,
@@ -137,8 +144,8 @@ export function WhatsAppButton({
     return (
       <button
         type="button"
-        onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
-        aria-label="Contactar por WhatsApp"
+        onClick={onClick}
+        aria-label={t("ariaLabel")}
         className={cn(
           "flex h-10 w-10 items-center justify-center rounded-full bg-brand-green text-white transition-colors duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
           className,
@@ -153,7 +160,7 @@ export function WhatsAppButton({
   return (
     <button
       type="button"
-      onClick={() => handleWhatsAppClick(mensaje, productName, intent)}
+      onClick={onClick}
       className={cn(
         "inline-flex items-center justify-center gap-2 rounded-full bg-brand-green font-semibold text-white transition-all duration-200 hover:bg-green-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-green focus-visible:ring-offset-2",
         sizeClasses[size],
@@ -161,7 +168,7 @@ export function WhatsAppButton({
       )}
     >
       <WhatsAppIcon className={iconSizeClasses[size]} />
-      {children ?? "RESERVAR POR WHATSAPP"}
+      {children ?? t("defaultLabel")}
     </button>
   );
 }

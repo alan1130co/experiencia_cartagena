@@ -180,9 +180,25 @@ export function Footer() {
           <p className="font-display text-3xl font-light text-primary lg:text-4xl">
             {SITE_CONFIG.name}
           </p>
-          <p className="text-sm text-on-surface-variant">
-            {t("copyright", { year, name: SITE_CONFIG.name })}
-          </p>
+          <div className="flex flex-col gap-1 sm:items-end">
+            <p className="text-sm text-on-surface-variant">
+              {t("copyright", { year, name: SITE_CONFIG.name })}
+            </p>
+            <p className="text-sm text-on-surface-variant">
+              {t.rich("credit", {
+                name: (chunks) => (
+                  <a
+                    href="https://www.alan-dev.site/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-on-surface-variant transition-colors duration-150 hover:text-primary"
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
+            </p>
+          </div>
         </div>
       </Container>
     </footer>

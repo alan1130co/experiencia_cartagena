@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Hero } from "@/components/sections/Hero";
 import { DestinosTrending } from "@/components/sections/DestinosTrending";
 import { BotesDestacados } from "@/components/sections/BotesDestacados";
@@ -11,9 +12,18 @@ import { FAQ } from "@/components/sections/FAQ";
 import { getTravelAgencySchema, getFAQSchema } from "@/lib/schema";
 import { faqs } from "@/lib/data/faq";
 
-export const metadata: Metadata = {
-  title: "Tour en Cartagena de Indias",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata.home" });
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 export default function Home() {
   return (
