@@ -19,7 +19,7 @@ export const CONTACTO = {
   whatsapp: "573244921697",
   whatsappMensaje: "Hola, me interesa información sobre una reserva en Experiencias Tour Cartagena.",
   telefono: null as string | null,
-  email: null as string | null,
+  email: "exptourcartagena@gmail.com" as string | null,
   direccion: "Torices Calle 42 #13-59",
   ciudad: "Cartagena de Indias",
   departamento: "Bolívar",
@@ -33,9 +33,9 @@ export const COORDENADAS = {
 } as const;
 
 export const REDES_SOCIALES = {
-  instagram: null as string | null, // URL completa: "https://instagram.com/..."
-  facebook: null as string | null,
-  tiktok: null as string | null,
+  instagram: "https://www.instagram.com/exptourcartagena/" as string | null,
+  facebook: "https://facebook.com/PLACEHOLDER" as string | null, // TODO: reemplazar por la URL final de Facebook
+  tiktok: "https://www.tiktok.com/@experienciastourctg" as string | null,
   youtube: null as string | null,
 } as const;
 
