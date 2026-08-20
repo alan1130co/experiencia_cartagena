@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
-import { buildProductTitle, withBrand } from "@/lib/metadata";
+import { buildMetadata, buildProductTitle, withBrand } from "@/lib/metadata";
 import { getTouristDestinationSchema, getBreadcrumbSchema } from "@/lib/schema";
 import { destinos, getDestino } from "@/lib/data/destinos";
 import type { Locale } from "@/lib/i18n/catalog-locale";
@@ -29,14 +29,19 @@ export async function generateMetadata({
     tMeta("destinoTitle2", { nombre: destino.nombre }),
   ]);
 
-  return {
+  const base = buildMetadata({
     title,
     description: `${destino.descripcionCorta} ${tMeta("destinoDescriptionSuffix")}`,
+    path: `/${locale}/destinos/${slug}`,
+    ogImage: destino.imagen,
+  });
+
+  return {
+    ...base,
     openGraph: {
+      ...base.openGraph,
       title: withBrand(title),
       description: destino.descripcionCorta,
-      images: [{ url: destino.imagen, alt: destino.imagenAlt }],
-      type: "website",
     },
   };
 }

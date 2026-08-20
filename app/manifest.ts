@@ -1,9 +1,10 @@
 import type { MetadataRoute } from "next";
+import { SITE_CONFIG } from "@/lib/constants";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Cartagena Índigo",
-    short_name: "C. Índigo",
+    name: SITE_CONFIG.name,
+    short_name: SITE_CONFIG.shortName,
     description:
       "Agencia de viajes premium en Cartagena de Indias, Colombia.",
     start_url: "/",

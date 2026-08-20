@@ -9,7 +9,7 @@ import { Section } from "@/components/ui/Section";
 import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { TourCard } from "@/components/catalogos/TourCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
-import { buildProductTitle, withBrand } from "@/lib/metadata";
+import { buildMetadata, buildProductTitle, withBrand } from "@/lib/metadata";
 import {
   getTouristTripSchema,
   getBreadcrumbSchema,
@@ -40,15 +40,20 @@ export async function generateMetadata({
     tMeta("tourTitle2", { titulo: tour.titulo }),
   ]);
 
-  return {
+  const base = buildMetadata({
     title,
     description: tour.descripcionBreve,
+    path: `/${locale}/tours/${slug}`,
+    ogImage: tour.imagenPrincipal,
+  });
+
+  return {
+    ...base,
     keywords: [tour.titulo, "tour Cartagena"],
     openGraph: {
+      ...base.openGraph,
       title: withBrand(title),
       description: tour.descripcionBreve,
-      images: [{ url: tour.imagenPrincipal, alt: tour.titulo }],
-      type: "website",
     },
   };
 }

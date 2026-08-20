@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import { buildMetadata } from "@/lib/metadata";
 import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
 
 export async function generateMetadata({
@@ -10,10 +11,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata.blog" });
-  return {
+  return buildMetadata({
     title: t("title"),
     description: t("description"),
-  };
+    path: `/${locale}/blog`,
+  });
 }
 
 export default function BlogPage() {

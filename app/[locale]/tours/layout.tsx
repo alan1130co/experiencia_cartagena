@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { buildMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -8,9 +9,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Metadata.tours" });
-  return {
+  const base = buildMetadata({
     title: t("title"),
     description: t("description"),
+    path: `/${locale}/tours`,
+  });
+  return {
+    ...base,
     keywords: [
       "tours Cartagena",
       "Centro Histórico",
@@ -19,9 +24,9 @@ export async function generateMetadata({
       "Cholón",
     ],
     openGraph: {
+      ...base.openGraph,
       title: t("ogTitle"),
       description: t("ogDescription"),
-      type: "website",
     },
   };
 }

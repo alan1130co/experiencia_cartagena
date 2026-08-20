@@ -5,10 +5,10 @@
 // ni al JSON-LD de schema.ts, un string sí.
 
 export const SITE_CONFIG = {
-  name: "Cartagena Indigo",
-  shortName: "Cartagena Indigo",
+  name: "Experiencias Tour Cartagena",
+  shortName: "Experiencias Tour Cartagena",
   tagline: "Agencia de Viajes Premium en Cartagena de Indias",
-  url: "https://cartagenaindigo.com",
+  url: "https://experienciatourcartagena.com",
   logo: "/images/ui/logo.png", // TODO: colocar logo final en public/images/ui/logo.png
   ogImage: "/images/ui/og-default.jpg", // TODO: crear imagen OG 1200×630
   locale: "es_CO",
@@ -17,7 +17,7 @@ export const SITE_CONFIG = {
 
 export const CONTACTO = {
   whatsapp: "573244921697",
-  whatsappMensaje: "Hola, me interesa información sobre una reserva en Cartagena Indigo.",
+  whatsappMensaje: "Hola, me interesa información sobre una reserva en Experiencias Tour Cartagena.",
   telefono: null as string | null,
   email: null as string | null,
   direccion: "Torices Calle 42 #13-59",
@@ -39,7 +39,7 @@ export const REDES_SOCIALES = {
   youtube: null as string | null,
 } as const;
 
-export const AÑO_FUNDACION: string | null = null; // formato ISO: "2019-01-01"
+export const AÑO_FUNDACION: string | null = "2022"; // formato ISO: "2019-01-01"
 
 // ─── Internacionalización (next-intl) ───────────────────────────────────────
 

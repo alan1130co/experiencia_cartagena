@@ -28,7 +28,7 @@ import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { EmbarcacionCard } from "@/components/catalogos/EmbarcacionCard";
 import { GaleriaFotos } from "@/components/catalogos/GaleriaFotos";
 import { formatPrice } from "@/lib/utils";
-import { buildProductTitle, withBrand } from "@/lib/metadata";
+import { buildMetadata, buildProductTitle, withBrand } from "@/lib/metadata";
 import { getTouristTripSchema, getBreadcrumbSchema } from "@/lib/schema";
 import {
   getEmbarcacionBySlug,
@@ -61,9 +61,15 @@ export async function generateMetadata({
     tMeta("embarcacionTitle2", { nombre: emb.nombre }),
   ]);
 
-  return {
+  const base = buildMetadata({
     title,
     description: emb.descripcionCorta,
+    path: `/${locale}/flota/${slug}`,
+    ogImage: emb.imagenPrincipal,
+  });
+
+  return {
+    ...base,
     keywords: [
       emb.nombre,
       "alquiler Cartagena",
@@ -75,10 +81,9 @@ export async function generateMetadata({
         : "bote Cartagena",
     ],
     openGraph: {
+      ...base.openGraph,
       title: withBrand(title),
       description: emb.descripcionCorta,
-      images: [{ url: emb.imagenPrincipal, alt: emb.imagenAlt }],
-      type: "website",
     },
   };
 }

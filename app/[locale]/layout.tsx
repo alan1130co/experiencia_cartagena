@@ -30,7 +30,6 @@ export const metadata: Metadata = {
   description:
     "Descubre Cartagena de Indias con tours exclusivos, yates privados y experiencias únicas en el Caribe colombiano.",
   metadataBase: new URL(SITE_CONFIG.url),
-  alternates: { canonical: "/" },
   openGraph: { siteName: SITE_CONFIG.name, locale: SITE_CONFIG.locale, type: "website" },
   twitter: { card: "summary_large_image" },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true } },

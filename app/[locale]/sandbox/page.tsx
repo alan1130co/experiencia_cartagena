@@ -56,7 +56,7 @@ export default function SandboxPage() {
             <ScrollReveal>
               <Badge className="bg-white/20 text-white">PASO 2 — Design System</Badge>
               <Heading level={1} className="mt-4 text-white">
-                Cartagena Índigo
+                Experiencias Tour Cartagena
               </Heading>
               <Text variant="body-lg" className="mt-4 max-w-xl text-white/80">
                 Página de prueba para validar todos los componentes base antes

@@ -7,8 +7,8 @@ const BRAND_SUFFIX = ` | ${SITE_CONFIG.shortName}`;
 /**
  * Elige la primera variante de título (de más a menos rica en keyword) que
  * quepa bajo TITLE_BUDGET una vez sumado el sufijo de marca que agrega el
- * template del layout raíz (`%s | Cartagena Indigo`). Si ninguna cabe, cae
- * al nombre del producto solo.
+ * template del layout raíz (`%s | Experiencias Tour Cartagena`). Si ninguna
+ * cabe, cae al nombre del producto solo.
  */
 export function buildProductTitle(name: string, variants: string[]): string {
   const fit = variants.find(
@@ -34,7 +34,7 @@ export function buildMetadata({
   title,
   description,
   path,
-  ogImage = "/images/og/default.jpg", // TODO: crear imagen OG real
+  ogImage = SITE_CONFIG.ogImage, // TODO: crear imagen OG real — ver SITE_CONFIG.ogImage
   ogType = "website",
 }: PageMetadataOptions): Metadata {
   const url = `${SITE_CONFIG.url}${path}`;
