@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/i18n/navigation";
@@ -17,7 +17,48 @@ const HERO_POSTER = "/images/hero/hero-poster.webp";
 export function Hero() {
   const t = useTranslations("Home.hero");
   const sectionRef = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // El cambio de idioma (ES/EN) navega a otra URL (/es -> /en), y en el App
+  // Router de Next.js una <page> siempre se desmonta y remonta al cambiar la
+  // URL — el Hero vive en page.tsx, no en un layout persistente, así que
+  // este remount del <video> es inevitable sin mover el video a un layout
+  // raíz global (lo que lo haría persistir en todas las páginas, no solo en
+  // Home). El atributo `autoplay` no siempre dispara la reproducción de forma
+  // fiable en navegadores móviles cuando el elemento se vuelve a montar
+  // rápido durante una transición SPA, así que forzamos el play()
+  // explícitamente y reintentamos si el navegador lo rechaza o si la carga
+  // falla a mitad de camino (red móvil inestable).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    let cancelled = false;
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // Autoplay rechazado (p. ej. política del navegador) — el poster
+        // se sigue mostrando, no es un error a reintentar.
+      });
+    };
+
+    const handleError = () => {
+      if (cancelled) return;
+      // Falla de red a mitad de carga tras el remount: reintenta una vez
+      // en vez de quedarse pegado en el poster para siempre.
+      video.load();
+      tryPlay();
+    };
+
+    video.addEventListener("error", handleError);
+    tryPlay();
+
+    return () => {
+      cancelled = true;
+      video.removeEventListener("error", handleError);
+    };
+  }, []);
 
   // Parallax: el video se desplaza más lento que el resto del contenido.
   // offset ["start end", "end start"] ata el progreso 0→1 exactamente a la
@@ -85,6 +126,7 @@ export function Hero() {
                 ver un borde vacío dentro del marco. */}
             <div className="relative aspect-4/5 overflow-hidden rounded-b-[16px] rounded-t-[200px]">
               <motion.video
+                ref={videoRef}
                 style={{ y }}
                 src={HERO_VIDEO}
                 poster={HERO_POSTER}
