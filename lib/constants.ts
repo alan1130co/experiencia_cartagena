@@ -34,7 +34,7 @@ export const COORDENADAS = {
 
 export const REDES_SOCIALES = {
   instagram: "https://www.instagram.com/exptourcartagena/" as string | null,
-  facebook: "https://facebook.com/PLACEHOLDER" as string | null, // TODO: reemplazar por la URL final de Facebook
+  facebook: "https://www.facebook.com/ExperienciasTourCartagena" as string | null, // TODO: reemplazar por la URL final de Facebook
   tiktok: "https://www.tiktok.com/@experienciastourctg" as string | null,
   youtube: null as string | null,
 } as const;
