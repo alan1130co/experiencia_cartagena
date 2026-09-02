@@ -13,7 +13,7 @@ interface SiteLogoProps {
 }
 
 /**
- * Logo del sitio con fallback a texto si /images/ui/logo.png no existe aún.
+ * Logo del sitio con fallback a texto si SITE_CONFIG.logo no existe aún.
  * Componente de cliente porque gestiona estado de error de imagen.
  */
 export function SiteLogo({ className, variant = "light" }: SiteLogoProps) {
@@ -38,9 +38,9 @@ export function SiteLogo({ className, variant = "light" }: SiteLogoProps) {
       src={SITE_CONFIG.logo}
       alt={`${SITE_CONFIG.name} — logo`}
       width={240}
-      height={80}
+      height={240}
       priority
-      className={cn("h-16 w-auto object-contain lg:h-24", className)}
+      className={cn("h-24 w-auto object-contain lg:h-32", className)}
       onError={() => setError(true)}
     />
   );

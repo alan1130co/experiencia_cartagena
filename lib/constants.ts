@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   shortName: "Experiencias Tour Cartagena",
   tagline: "Agencia de Viajes Premium en Cartagena de Indias",
   url: "https://experienciatourcartagena.com",
-  logo: "/images/ui/logo.png", // TODO: colocar logo final en public/images/ui/logo.png
+  logo: "/images/ui/logo_experienciatour_cartagena.png",
   ogImage: "/images/ui/og-default.jpg", // TODO: crear imagen OG 1200×630
   locale: "es_CO",
   language: "es",
