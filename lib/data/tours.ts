@@ -1,6 +1,19 @@
 import { toursEn } from "./translations/tours.en";
 import type { Locale } from "@/lib/i18n/catalog-locale";
 
+/**
+ * Convención de imágenes de tours (no automatizada, solo convención de nombres):
+ *
+ *   /public/images/tours/{slug}-main.webp   → imagenPrincipal
+ *   /public/images/tours/{slug}-1.webp      → galeria[0]
+ *   /public/images/tours/{slug}-2.webp      → galeria[1]
+ *   /public/images/tours/{slug}-N.webp      → galeria[N-1]  (4-6 fotos recomendado)
+ *
+ * Todas las fotos en relación de aspecto 4:3 (TourCard y GaleriaFotos usan
+ * aspect-4/3 + object-contain). Formato .webp. Ver AGREGAR-TOUR.md en la
+ * raíz del proyecto para el flujo completo paso a paso.
+ */
+
 export interface TourItem {
   id: string;
   slug: string;
@@ -13,6 +26,8 @@ export interface TourItem {
   incluye: string[];
   noIncluye: string[];
   ubicacionSalida: string;
+  /** Si es true, el tour puede aparecer en el carrusel de destacados del home. Opcional para no romper tours existentes. */
+  destacado?: boolean;
 }
 
 export const toursData: TourItem[] = [
@@ -157,6 +172,37 @@ export const toursData: TourItem[] = [
       "Cervezas (costo adicional)",
       "Gastos no especificados en el paquete"
     ]
+  },
+  {
+    id: "6",
+    slug: "volcan-del-totumo",
+    titulo: "Volcán del Totumo + Playa Privada",
+    imagenPrincipal: "/images/tours/volcan-del-totumo-main.webp",
+    galeria: [
+      "/images/tours/volcan-del-totumo-1.webp",
+      "/images/tours/volcan-del-totumo-2.webp",
+      "/images/tours/volcan-del-totumo-3.webp",
+      "/images/tours/volcan-del-totumo-4.webp"
+    ],
+    descripcionBreve: "Baño de lodo sanador en el volcán y tarde de playa privada, todo en un día.",
+    precioDesde: "Consultar tarifa",
+    horarios: "Recogida hotel: 7:00 am | Salida volcán: 8:30 am | Regreso: 4:00 pm",
+    ubicacionSalida: "Recogida directa en el hotel (Bocagrande, Laguito, Castillogrande, Zona Norte)",
+    incluye: [
+      "Recogida en el hotel",
+      "Guía personalizado",
+      "Café + dulce",
+      "Entrada al volcán",
+      "Baño en la ciénaga",
+      "Bebida de bienvenida",
+      "Almuerzo típico",
+      "Piscinas",
+      "Zona de juegos para niños",
+      "Baño de mar en zona privada",
+      "Sillas, parasol, baños y duchas"
+    ],
+    noIncluye: [],
+    destacado: true
   }
 ];
 

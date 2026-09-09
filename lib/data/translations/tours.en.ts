@@ -111,4 +111,27 @@ export const toursEn: Record<string, TourTranslation> = {
       "Expenses not specified in the package",
     ],
   },
+  "volcan-del-totumo": {
+    titulo: "Totumo Volcano + Private Beach",
+    descripcionBreve:
+      "Healing mud bath at the volcano and a private beach afternoon, all in one day.",
+    precioDesde: "Check rate",
+    horarios: "Hotel pickup: 7:00 am | Departure to volcano: 8:30 am | Return: 4:00 pm",
+    ubicacionSalida:
+      "Direct hotel pickup (Bocagrande, Laguito, Castillogrande, Zona Norte)",
+    incluye: [
+      "Hotel pickup",
+      "Personalized guide",
+      "Coffee + pastry",
+      "Volcano entrance",
+      "Mud bath in the lagoon",
+      "Welcome drink",
+      "Traditional lunch",
+      "Pools",
+      "Kids' play area",
+      "Sea bath in private area",
+      "Chairs, parasol, restrooms and showers",
+    ],
+    noIncluye: [],
+  },
 };
