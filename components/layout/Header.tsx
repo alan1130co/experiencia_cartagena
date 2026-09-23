@@ -47,6 +47,7 @@ export function Header() {
                   <li key={link.href}>
                     <Link
                       href={link.href}
+                      aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "relative text-label-caps transition-colors duration-200 hover:text-primary",
                         "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-full after:origin-left after:bg-primary after:transition-transform after:duration-200",
@@ -217,6 +218,7 @@ export function Header() {
                     <Link
                       href={link.href}
                       onClick={close}
+                      aria-current={isActive ? "page" : undefined}
                       className={cn(
                         "block rounded-md px-4 py-2.5 text-label-caps transition-colors duration-150",
                         isActive
