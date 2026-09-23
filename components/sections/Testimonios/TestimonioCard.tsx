@@ -25,7 +25,7 @@ export function TestimonioCard({ testimonio }: TestimonioCardProps) {
     >
 
       {/* Estrellas */}
-      <div className="flex gap-1" aria-label={t("ratingLabel", { rating: testimonio.rating })}>
+      <div className="flex gap-1" role="img" aria-label={t("ratingLabel", { rating: testimonio.rating })}>
         {Array.from({ length: testimonio.rating }).map((_, i) => (
           <Star key={i} className="size-5 fill-brand-orange text-brand-orange" aria-hidden />
         ))}

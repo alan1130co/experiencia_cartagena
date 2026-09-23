@@ -23,10 +23,10 @@ const BENTO_SPAN = [
 ];
 
 const IMAGE_SIZES = [
-  "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 50vw",
-  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 50vw",
-  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
-  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw",
+  "(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 596px",
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 596px",
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 286px",
+  "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 286px",
 ];
 
 export function DestinosTrending() {
