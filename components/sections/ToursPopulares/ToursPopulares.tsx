@@ -10,7 +10,8 @@ import { TourCard } from "./TourCard";
 export function ToursPopulares() {
   const t = useTranslations("Home.tours");
   const destacados = toursData.filter((tour) => tour.destacado);
-  const tours = (destacados.length > 0 ? destacados : toursData).slice(0, 3);
+  const relleno = toursData.filter((tour) => !destacados.includes(tour));
+  const tours = [...destacados, ...relleno].slice(0, 3);
 
   return (
     <Section className="bg-surface">
