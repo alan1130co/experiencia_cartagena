@@ -1,17 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { preload } from "react-dom";
 import { useTranslations } from "next-intl";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
-import { ScrollReveal } from "@/components/layout/ScrollReveal";
 
 const HERO_VIDEO = "/videos/hero/hero-principal.mp4";
-// TODO: generar este still a partir del video (frame ~1s) y optimizarlo a
-// <150 KB — ver instrucciones en public/images/hero/README.md.
 const HERO_POSTER = "/images/hero/hero-poster.webp";
 
 export function Hero() {
@@ -19,6 +17,15 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const shouldReduceMotion = useReducedMotion();
+
+  // HERO_POSTER es el elemento LCP de la home. El navegador no lo descubre
+  // como recurso crítico hasta que el parser HTML llega al atributo
+  // `poster` del <video> más abajo — a diferencia de un <img>, no hay forma
+  // de darle `fetchPriority` directo al poster de un <video>. `preload()`
+  // (React 19) inyecta un <link rel="preload"> en el <head> durante el
+  // render (server y cliente), así el fetch arranca antes en vez de
+  // esperar a que el parser llegue al <video>.
+  preload(HERO_POSTER, { as: "image", fetchPriority: "high" });
 
   // El cambio de idioma (ES/EN) navega a otra URL (/es -> /en), y en el App
   // Router de Next.js una <page> siempre se desmonta y remonta al cambiar la
@@ -87,8 +94,15 @@ export function Hero() {
         <div className="grid grid-cols-1 items-center gap-8 py-16 lg:grid-cols-12 lg:gap-16 lg:py-24">
 
           {/* ── IZQUIERDA: bloque de texto (5 de 12 columnas en desktop) ── */}
-          {/* above-the-fold: eager (Framer Motion anima al montar, sin esperar scroll) */}
-          <ScrollReveal eager className="order-2 lg:order-1 lg:col-span-5 lg:col-start-1">
+          {/* above-the-fold: sin animación de entrada a propósito. Este
+              bloque y el de la derecha usaban <ScrollReveal>, que parte de
+              opacity:0 y anima con Framer Motion tras hidratar — Chrome
+              excluye del LCP a los elementos en opacity:0, así que el video
+              de la derecha (el elemento LCP) no se consideraba "pintado"
+              hasta que React montaba y corría la animación. Se quitó de
+              ambos bloques, no solo del video, para no dejar un desfase
+              visual entre el texto y el video al cargar. */}
+          <div className="order-2 lg:order-1 lg:col-span-5 lg:col-start-1">
             <h1
               className="font-display font-light leading-[1.1] tracking-[-0.02em] text-primary"
               style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}
@@ -112,15 +126,13 @@ export function Hero() {
                 <ArrowRight className="size-4" aria-hidden />
               </Link>
             </div>
-          </ScrollReveal>
+          </div>
 
           {/* ── DERECHA: imagen en tarjeta portal (7 de 12 columnas en desktop) ── */}
-          {/* above-the-fold: eager, delay conserva el stagger que tenía antes */}
-          <ScrollReveal
-            eager
-            delay={150}
-            className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6"
-          >
+          {/* above-the-fold: sin animación de entrada — es el elemento LCP,
+              debe pintarse en cuanto el HTML/CSS carga, sin esperar
+              hidratación de React (ver nota de Render Delay más abajo). */}
+          <div className="order-1 lg:order-2 lg:col-span-7 lg:col-start-6">
             {/* Marco fijo (no se mueve) que recorta el video en movimiento —
                 el video va sobredimensionado para que el parallax nunca deje
                 ver un borde vacío dentro del marco. */}
@@ -139,7 +151,7 @@ export function Hero() {
                 className="absolute inset-x-0 -top-[9%] h-[118%] w-full object-cover object-center"
               />
             </div>
-          </ScrollReveal>
+          </div>
 
         </div>
       </Container>

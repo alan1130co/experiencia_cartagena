@@ -25,10 +25,28 @@ const nextConfig: NextConfig = {
   // cabecera el archivo se servía con `Cache-Control: public, max-age=0`,
   // forzando una revalidación/descarga completa por red en cada remount —
   // invisible en desktop pero lento (o bloqueante) en redes móviles.
+  //
+  // /images/:path* cubre los assets estáticos servidos directo desde
+  // public/images (ej. hero-poster.webp) — sin esta regla también caían en
+  // el default `max-age=0` de Next para archivos de public/. No se usa
+  // `immutable`/max-age de 1 año como en los chunks hasheados de
+  // _next/static porque estos archivos se reemplazan por nombre fijo
+  // (ver public/images/hero/README.md) — 7 días + stale-while-revalidate
+  // de 30 evita servir contenido desactualizado por mucho tiempo tras un
+  // reemplazo, misma política que ya existía para /videos/.
   async headers() {
     return [
       {
         source: "/videos/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=604800, stale-while-revalidate=2592000",
+          },
+        ],
+      },
+      {
+        source: "/images/:path*",
         headers: [
           {
             key: "Cache-Control",
